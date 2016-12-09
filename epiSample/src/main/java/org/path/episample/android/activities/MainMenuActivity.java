@@ -13,55 +13,7 @@
  */
 
 package org.path.episample.android.activities;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.json.JSONObject;
-import org.path.common.android.data.CensusModel;
-import org.path.common.android.database.DatabaseFactory;
-import org.path.common.android.logic.PropertyManager;
-import org.path.common.android.provider.FormsColumns;
-import org.path.common.android.utilities.AndroidUtils;
-import org.path.common.android.utilities.AndroidUtils.MacroStringExpander;
-import org.path.common.android.utilities.CensusUtil;
-import org.path.common.android.utilities.ODKDatabaseUtils;
-import org.path.common.android.utilities.ODKFileUtils;
-import org.path.common.android.utilities.UrlUtils;
-import org.path.common.android.utilities.WebLogger;
-import org.path.episample.android.R;
-import org.path.episample.android.application.Survey;
-import org.path.episample.android.fragments.AboutMenuFragment;
-import org.path.episample.android.fragments.CollectFragment;
-import org.path.episample.android.fragments.EditCensusFragment;
-import org.path.episample.android.fragments.FormChooserListFragment;
-import org.path.episample.android.fragments.FormDeleteListFragment;
-import org.path.episample.android.fragments.FormDownloadListFragment;
-import org.path.episample.android.fragments.InitializationFragment;
-import org.path.episample.android.fragments.InstanceUploaderListFragment;
-import org.path.episample.android.fragments.InstanceUploaderTableChooserListFragment;
-import org.path.episample.android.fragments.InvalidateCensusFragment;
-import org.path.episample.android.fragments.MainMenuFragment;
-import org.path.episample.android.fragments.NavigateFragment;
-import org.path.episample.android.fragments.RemoveCensusFragment;
-import org.path.episample.android.fragments.RestoreFragment;
-import org.path.episample.android.fragments.SelectFragment;
-import org.path.episample.android.fragments.SendReceiveFragment;
-import org.path.episample.android.fragments.WebViewFragment;
-import org.path.episample.android.logic.DynamicPropertiesCallback;
-import org.path.episample.android.logic.FormIdStruct;
-import org.path.episample.android.logic.PropertiesSingleton;
-import org.path.episample.android.preferences.AdminPreferencesActivity;
-import org.path.episample.android.preferences.PreferencesActivity;
-import org.path.episample.android.provider.DbShimService;
-import org.path.episample.android.provider.FormsProviderAPI;
-import org.path.episample.android.utilities.BackupRestoreUtils;
-import org.path.episample.android.views.ODKWebView;
-
+import android.os.StrictMode;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -101,6 +53,56 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.json.JSONObject;
+import org.path.common.android.data.CensusModel;
+import org.path.common.android.database.DatabaseFactory;
+import org.path.common.android.logic.PropertyManager;
+import org.path.common.android.provider.FormsColumns;
+import org.path.common.android.utilities.AndroidUtils;
+import org.path.common.android.utilities.AndroidUtils.MacroStringExpander;
+import org.path.common.android.utilities.CensusUtil;
+import org.path.common.android.utilities.ODKDatabaseUtils;
+import org.path.common.android.utilities.ODKFileUtils;
+import org.path.common.android.utilities.UrlUtils;
+import org.path.common.android.utilities.WebLogger;
+import org.path.episample.android.R;
+import org.path.episample.android.application.Survey;
+import org.path.episample.android.fragments.AboutMenuFragment;
+import org.path.episample.android.fragments.CollectFragment;
+import org.path.episample.android.fragments.EditCensusFragment;
+import org.path.episample.android.fragments.FormChooserListFragment;
+import org.path.episample.android.fragments.FormDeleteListFragment;
+import org.path.episample.android.fragments.FormDownloadListFragment;
+import org.path.episample.android.fragments.InitializationFragment;
+import org.path.episample.android.fragments.InstanceUploaderListFragment;
+import org.path.episample.android.fragments.InstanceUploaderTableChooserListFragment;
+import org.path.episample.android.fragments.InvalidateCensusFragment;
+import org.path.episample.android.fragments.MainMenuFragment;
+import org.path.episample.android.fragments.NavigateFragment;
+import org.path.episample.android.fragments.OSMapFragment;
+import org.path.episample.android.fragments.PDFMapFragment;
+import org.path.episample.android.fragments.RemoveCensusFragment;
+import org.path.episample.android.fragments.RestoreFragment;
+import org.path.episample.android.fragments.SelectFragment;
+import org.path.episample.android.fragments.SendReceiveFragment;
+import org.path.episample.android.fragments.WebViewFragment;
+import org.path.episample.android.logic.DynamicPropertiesCallback;
+import org.path.episample.android.logic.FormIdStruct;
+import org.path.episample.android.logic.PropertiesSingleton;
+import org.path.episample.android.preferences.AdminPreferencesActivity;
+import org.path.episample.android.preferences.PreferencesActivity;
+import org.path.episample.android.provider.DbShimService;
+import org.path.episample.android.provider.FormsProviderAPI;
+import org.path.episample.android.utilities.BackupRestoreUtils;
+import org.path.episample.android.views.ODKWebView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
 /**
  * Responsible for displaying buttons to launch the major activities. Launches
  * some activities based on returns of others.
@@ -113,8 +115,8 @@ public class MainMenuActivity extends Activity implements ODKActivity {
   private static final String t = "MainMenuActivity";
 
   public static enum ScreenList {
-		MAIN_SCREEN, MAIN_MENU, COLLECT_MODULE, SEND_RECEIVE_WIFI_DIRECT_MODULE, SEND_RECEIVE_BLUETOOTH_MODULE, SELECT_MODULE, NAVIGATE_MODULE, EDIT_CENSUS_MODULE, RESTORE_MODULE, REMOVE_CENSUS_MODULE, INVALIDATE_CENSUS_MODULE, FORM_CHOOSER, FORM_DOWNLOADER, FORM_DELETER, WEBKIT, INSTANCE_UPLOADER_TABLE_CHOOSER, INSTANCE_UPLOADER, CUSTOM_VIEW, INITIALIZATION_DIALOG, ABOUT_MENU
-	};
+    MAIN_SCREEN, MAIN_MENU, COLLECT_MODULE, SEND_RECEIVE_WIFI_DIRECT_MODULE, SEND_RECEIVE_BLUETOOTH_MODULE, SELECT_MODULE, NAVIGATE_MODULE, EDIT_CENSUS_MODULE, RESTORE_MODULE, REMOVE_CENSUS_MODULE, INVALIDATE_CENSUS_MODULE, FORM_CHOOSER, FORM_DOWNLOADER, FORM_DELETER, WEBKIT, INSTANCE_UPLOADER_TABLE_CHOOSER, INSTANCE_UPLOADER, CUSTOM_VIEW, INITIALIZATION_DIALOG, ABOUT_MENU, MAP_VIEWER, PDF_MAP_VIEWER
+  };
 
   // Extra returned from gp activity
   // TODO: move to Survey???
@@ -161,6 +163,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
   private static final int MENU_MARK_CENSUS_AS_INVALID = Menu.FIRST + 12;
   //private static final int MENU_SEND_REVEIVE_BLUETOOTH = Menu.FIRST + 13;
   private static final int MENU_ABOUT = Menu.FIRST + 13;
+  private static final int MENU_MAP = Menu.FIRST + 14;
 
   // activity callback codes
   private static final int HANDLER_ACTIVITY_CODE = 20;
@@ -185,9 +188,9 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
   public static CensusModel SELECTED_CENSUS = null;
   public static boolean EDIT_POINT = false;
-  
+
   private static final FrameLayout.LayoutParams COVER_SCREEN_GRAVITY_CENTER = new FrameLayout.LayoutParams(
-      ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.CENTER);
 
   public static class TabListener<T extends Fragment> implements ActionBar.TabListener {
     private Fragment mFragment;
@@ -434,17 +437,17 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       Uri formUri = null;
 
       if (uri.getScheme().equalsIgnoreCase(uriFormsProvider.getScheme())
-          && uri.getAuthority().equalsIgnoreCase(uriFormsProvider.getAuthority())) {
+              && uri.getAuthority().equalsIgnoreCase(uriFormsProvider.getAuthority())) {
         List<String> segments = uri.getPathSegments();
         if (segments != null && segments.size() >= 2) {
           String appName = segments.get(0);
           setAppName(appName);
           formUri = Uri.withAppendedPath(Uri.withAppendedPath(uriFormsProvider, appName),
-              segments.get(1));
+                  segments.get(1));
         } else {
           swapToFragmentView(ScreenList.FORM_CHOOSER);
           createErrorDialog(
-              getString(R.string.invalid_uri_expecting_n_segments, uri.toString(), 2), EXIT);
+                  getString(R.string.invalid_uri_expecting_n_segments, uri.toString(), 2), EXIT);
           return;
         }
         // request specifies a specific formUri -- try to open that
@@ -529,28 +532,30 @@ public class MainMenuActivity extends Activity implements ODKActivity {
     this.startService(intent);
 
     this.bindService(intent, mConnection, Context.BIND_AUTO_CREATE
-        | ((Build.VERSION.SDK_INT >= 14) ? Context.BIND_ADJUST_WITH_ACTIVITY : 0));
+            | ((Build.VERSION.SDK_INT >= 14) ? Context.BIND_ADJUST_WITH_ACTIVITY : 0));
 
     FrameLayout shadow = (FrameLayout) findViewById(R.id.shadow_content);
     View frags = findViewById(R.id.main_content);
     ODKWebView wkt = (ODKWebView) findViewById(R.id.webkit_view);
 
     if (currentFragment == ScreenList.MAIN_MENU
-    		|| currentFragment == ScreenList.COLLECT_MODULE
-			|| currentFragment == ScreenList.SEND_RECEIVE_WIFI_DIRECT_MODULE
-			|| currentFragment == ScreenList.SEND_RECEIVE_BLUETOOTH_MODULE
-			|| currentFragment == ScreenList.SELECT_MODULE
-			|| currentFragment == ScreenList.NAVIGATE_MODULE
-			|| currentFragment == ScreenList.RESTORE_MODULE
-			|| currentFragment == ScreenList.EDIT_CENSUS_MODULE
-			|| currentFragment == ScreenList.REMOVE_CENSUS_MODULE
-			|| currentFragment == ScreenList.INVALIDATE_CENSUS_MODULE
-			|| currentFragment == ScreenList.FORM_CHOOSER 
-			|| currentFragment == ScreenList.FORM_DOWNLOADER
-	        || currentFragment == ScreenList.FORM_DELETER
-	        || currentFragment == ScreenList.INSTANCE_UPLOADER_TABLE_CHOOSER
-	        || currentFragment == ScreenList.INSTANCE_UPLOADER
-	        || currentFragment == ScreenList.INITIALIZATION_DIALOG) {
+            || currentFragment == ScreenList.COLLECT_MODULE
+            || currentFragment == ScreenList.SEND_RECEIVE_WIFI_DIRECT_MODULE
+            || currentFragment == ScreenList.SEND_RECEIVE_BLUETOOTH_MODULE
+            || currentFragment == ScreenList.SELECT_MODULE
+            || currentFragment == ScreenList.NAVIGATE_MODULE
+            || currentFragment == ScreenList.RESTORE_MODULE
+            || currentFragment == ScreenList.EDIT_CENSUS_MODULE
+            || currentFragment == ScreenList.REMOVE_CENSUS_MODULE
+            || currentFragment == ScreenList.INVALIDATE_CENSUS_MODULE
+            || currentFragment == ScreenList.FORM_CHOOSER
+            || currentFragment == ScreenList.FORM_DOWNLOADER
+            || currentFragment == ScreenList.FORM_DELETER
+            || currentFragment == ScreenList.INSTANCE_UPLOADER_TABLE_CHOOSER
+            || currentFragment == ScreenList.INSTANCE_UPLOADER
+            || currentFragment == ScreenList.INITIALIZATION_DIALOG
+            || currentFragment == ScreenList.MAP_VIEWER
+            || currentFragment == ScreenList.PDF_MAP_VIEWER) {
       shadow.setVisibility(View.GONE);
       shadow.removeAllViews();
       wkt.setVisibility(View.GONE);
@@ -577,7 +582,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
   public void scanForConflictAllTables() {
     long now = System.currentTimeMillis();
     WebLogger.getLogger(getAppName()).i(this.getClass().getSimpleName(),
-        "scanForConflictAllTables -- searching for conflicts and checkpoints ");
+            "scanForConflictAllTables -- searching for conflicts and checkpoints ");
 
     SQLiteDatabase db = null;
     try {
@@ -589,10 +594,10 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       for (String tableId : tableIds) {
         int health = ODKDatabaseUtils.get().getTableHealth(db, tableId);
         if ( (health & ODKDatabaseUtils.TABLE_HEALTH_HAS_CONFLICTS) != 0) {
-            conflictTables.putString(tableId, tableId);
+          conflictTables.putString(tableId, tableId);
         }
       }
-      
+
       mConflictTables = conflictTables;
     } finally {
       if (db != null) {
@@ -602,7 +607,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
     long elapsed = System.currentTimeMillis() - now;
     WebLogger.getLogger(getAppName()).i(this.getClass().getSimpleName(),
-        "scanForConflictAllTables -- full table scan completed: " + Long.toString(elapsed) + " ms");
+            "scanForConflictAllTables -- full table scan completed: " + Long.toString(elapsed) + " ms");
   }
 
   @Override
@@ -631,15 +636,15 @@ public class MainMenuActivity extends Activity implements ODKActivity {
         this.startActivityForResult(i, CONFLICT_ACTIVITY_CODE);
       } catch (ActivityNotFoundException e) {
         Toast.makeText(this,
-            getString(R.string.activity_not_found, SYNC_CONFLICT_ACTIVITY_COMPONENT_NAME),
-            Toast.LENGTH_LONG).show();
+                getString(R.string.activity_not_found, SYNC_CONFLICT_ACTIVITY_COMPONENT_NAME),
+                Toast.LENGTH_LONG).show();
       }
     }
   }
 
   public void setCurrentForm(FormIdStruct currentForm) {
     WebLogger.getLogger(getAppName()).i(t,
-        "setCurrentForm: " + ((currentForm == null) ? "null" : currentForm.formPath));
+            "setCurrentForm: " + ((currentForm == null) ? "null" : currentForm.formPath));
     this.currentForm = currentForm;
   }
 
@@ -682,7 +687,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
   public String getActiveUser() {
     FormIdStruct form = getCurrentForm();
     final DynamicPropertiesCallback cb = new DynamicPropertiesCallback(this, getAppName(),
-        form == null ? null : getCurrentForm().tableId, getInstanceId());
+            form == null ? null : getCurrentForm().tableId, getInstanceId());
 
     String name = mPropertyManager.getSingularProperty(PropertyManager.EMAIL, cb);
     if (name == null || name.length() == 0) {
@@ -702,7 +707,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
   public String getProperty(String propertyId) {
     FormIdStruct form = getCurrentForm();
     final DynamicPropertiesCallback cb = new DynamicPropertiesCallback(this, getAppName(),
-        form == null ? null : getCurrentForm().tableId, getInstanceId());
+            form == null ? null : getCurrentForm().tableId, getInstanceId());
 
     String value = mPropertyManager.getSingularProperty(propertyId, cb);
     return value;
@@ -740,15 +745,15 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       // (in case DB corrupted)
       String orderBy = FormsColumns.FORM_VERSION + " DESC";
       c = getContentResolver().query(Uri.withAppendedPath(FormsProviderAPI.CONTENT_URI, appName),
-          null, selection, selectionArgs, orderBy);
+              null, selection, selectionArgs, orderBy);
 
       if (c != null && c.getCount() > 0) {
         // we found a match...
         c.moveToFirst();
         formPath = ODKDatabaseUtils.get().getIndexAsString(c,
-            c.getColumnIndex(FormsColumns.FORM_PATH));
+                c.getColumnIndex(FormsColumns.FORM_PATH));
         lastModified = ODKDatabaseUtils.get().getIndexAsType(c, Long.class,
-            c.getColumnIndex(FormsColumns.DATE));
+                c.getColumnIndex(FormsColumns.DATE));
       }
     } finally {
       if (c != null && !c.isClosed()) {
@@ -787,7 +792,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
     }
 
     String fullPath = UrlUtils.getAsWebViewUri(this, appName,
-        ODKFileUtils.asUriFragment(appName, htmlFile));
+            ODKFileUtils.asUriFragment(appName, htmlFile));
 
     if (fullPath == null) {
       return null;
@@ -817,7 +822,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       trackingFormLastModifiedDate = currentForm.lastDownloadDate.getTime();
     } else {
       changed = changed
-          || (Long.valueOf(trackingFormLastModifiedDate).compareTo(
+              || (Long.valueOf(trackingFormLastModifiedDate).compareTo(
               currentForm.lastDownloadDate.getTime()) < 0);
       trackingFormLastModifiedDate = currentForm.lastDownloadDate.getTime();
     }
@@ -836,21 +841,21 @@ public class MainMenuActivity extends Activity implements ODKActivity {
         return "";
       }
       String hashUrl = "#formPath="
-          + StringEscapeUtils.escapeHtml4(info.relativePath)
-          + ((instanceId == null) ? "" : "&instanceId=" + StringEscapeUtils.escapeHtml4(instanceId))
-          + ((getScreenPath() == null) ? "" : "&screenPath="
+              + StringEscapeUtils.escapeHtml4(info.relativePath)
+              + ((instanceId == null) ? "" : "&instanceId=" + StringEscapeUtils.escapeHtml4(instanceId))
+              + ((getScreenPath() == null) ? "" : "&screenPath="
               + StringEscapeUtils.escapeHtml4(getScreenPath()))
-          + ((refId == null) ? "" : "&refId=" + StringEscapeUtils.escapeHtml4(refId))
-          + ((auxillaryHash == null) ? "" : "&" + auxillaryHash);
+              + ((refId == null) ? "" : "&refId=" + StringEscapeUtils.escapeHtml4(refId))
+              + ((auxillaryHash == null) ? "" : "&" + auxillaryHash);
       return hashUrl;
     } else {
       String hashUrl = "#formPath="
-          + StringEscapeUtils.escapeHtml4((currentForm == null) ? "" : currentForm.formPath)
-          + ((instanceId == null) ? "" : "&instanceId=" + StringEscapeUtils.escapeHtml4(instanceId))
-          + ((getScreenPath() == null) ? "" : "&screenPath="
+              + StringEscapeUtils.escapeHtml4((currentForm == null) ? "" : currentForm.formPath)
+              + ((instanceId == null) ? "" : "&instanceId=" + StringEscapeUtils.escapeHtml4(instanceId))
+              + ((getScreenPath() == null) ? "" : "&screenPath="
               + StringEscapeUtils.escapeHtml4(getScreenPath()))
-          + ((refId == null) ? "" : "&refId=" + StringEscapeUtils.escapeHtml4(refId))
-          + ((auxillaryHash == null) ? "" : "&" + auxillaryHash);
+              + ((refId == null) ? "" : "&refId=" + StringEscapeUtils.escapeHtml4(refId))
+              + ((auxillaryHash == null) ? "" : "&" + auxillaryHash);
 
       return hashUrl;
     }
@@ -876,7 +881,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
     mPropertyManager = new PropertyManager(this);
     mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-    
+
     // must be at the beginning of any activity that can be called from an
     // external intent
     setAppName("survey");
@@ -889,7 +894,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       final Uri uriFormsProvider = FormsProviderAPI.CONTENT_URI;
       final Uri uriWebView = UrlUtils.getWebViewContentUri(this);
       if (uri.getScheme().equalsIgnoreCase(uriFormsProvider.getScheme())
-          && uri.getAuthority().equalsIgnoreCase(uriFormsProvider.getAuthority())) {
+              && uri.getAuthority().equalsIgnoreCase(uriFormsProvider.getAuthority())) {
         List<String> segments = uri.getPathSegments();
         if (segments != null && segments.size() == 1) {
           String appName = segments.get(0);
@@ -898,16 +903,16 @@ public class MainMenuActivity extends Activity implements ODKActivity {
           String appName = segments.get(0);
           setAppName(appName);
           formUri = Uri.withAppendedPath(Uri.withAppendedPath(uriFormsProvider, appName),
-              segments.get(1));
+                  segments.get(1));
         } else {
           assignContentView();
           createErrorDialog(
-              getString(R.string.invalid_uri_expecting_n_segments, uri.toString(), 2), EXIT);
+                  getString(R.string.invalid_uri_expecting_n_segments, uri.toString(), 2), EXIT);
           return;
         }
       } else if (uri.getScheme().equals(uriWebView.getScheme())
-          && uri.getAuthority().equals(uriWebView.getAuthority())
-          && uri.getPort() == uriWebView.getPort()) {
+              && uri.getAuthority().equals(uriWebView.getAuthority())
+              && uri.getPort() == uriWebView.getPort()) {
         List<String> segments = uri.getPathSegments();
         if (segments != null && segments.size() == 1) {
           String appName = segments.get(0);
@@ -915,15 +920,15 @@ public class MainMenuActivity extends Activity implements ODKActivity {
         } else {
           assignContentView();
           createErrorDialog(getString(R.string.invalid_uri_expecting_one_segment, uri.toString()),
-              EXIT);
+                  EXIT);
           return;
         }
 
       } else {
         assignContentView();
         createErrorDialog(
-            getString(R.string.unrecognized_uri, uri.toString(), uriWebView.toString(),
-                uriFormsProvider.toString()), EXIT);
+                getString(R.string.unrecognized_uri, uri.toString(), uriWebView.toString(),
+                        uriFormsProvider.toString()), EXIT);
         return;
       }
     }
@@ -931,7 +936,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
     if (savedInstanceState != null) {
       // if appName is explicitly set, use it...
       setAppName(savedInstanceState.containsKey(APP_NAME) ? savedInstanceState.getString(APP_NAME)
-          : getAppName());
+              : getAppName());
 
       if (savedInstanceState.containsKey(CONFLICT_TABLES)) {
         mConflictTables = savedInstanceState.getBundle(CONFLICT_TABLES);
@@ -955,37 +960,37 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       // if we are restoring, assume that initialization has already occurred.
 
       pageWaitingForData = savedInstanceState.containsKey(PAGE_WAITING_FOR_DATA) ? savedInstanceState
-          .getString(PAGE_WAITING_FOR_DATA) : null;
+              .getString(PAGE_WAITING_FOR_DATA) : null;
       pathWaitingForData = savedInstanceState.containsKey(PATH_WAITING_FOR_DATA) ? savedInstanceState
-          .getString(PATH_WAITING_FOR_DATA) : null;
+              .getString(PATH_WAITING_FOR_DATA) : null;
       actionWaitingForData = savedInstanceState.containsKey(ACTION_WAITING_FOR_DATA) ? savedInstanceState
-          .getString(ACTION_WAITING_FOR_DATA) : null;
+              .getString(ACTION_WAITING_FOR_DATA) : null;
 
       currentFragment = ScreenList
-          .valueOf(savedInstanceState.containsKey(CURRENT_FRAGMENT) ? savedInstanceState
-              .getString(CURRENT_FRAGMENT) : currentFragment.name());
+              .valueOf(savedInstanceState.containsKey(CURRENT_FRAGMENT) ? savedInstanceState
+                      .getString(CURRENT_FRAGMENT) : currentFragment.name());
 
       if (savedInstanceState.containsKey(FORM_URI)) {
         FormIdStruct newForm = FormIdStruct.retrieveFormIdStruct(getContentResolver(),
-            Uri.parse(savedInstanceState.getString(FORM_URI)));
+                Uri.parse(savedInstanceState.getString(FORM_URI)));
         if (newForm != null) {
           setAppName(newForm.appName);
           setCurrentForm(newForm);
         }
       }
       setInstanceId(savedInstanceState.containsKey(INSTANCE_ID) ? savedInstanceState
-          .getString(INSTANCE_ID) : getInstanceId());
+              .getString(INSTANCE_ID) : getInstanceId());
       setUploadTableId(savedInstanceState.containsKey(UPLOAD_TABLE_ID) ? savedInstanceState
-          .getString(UPLOAD_TABLE_ID) : getUploadTableId());
+              .getString(UPLOAD_TABLE_ID) : getUploadTableId());
 
       String tmpScreenPath = savedInstanceState.containsKey(SCREEN_PATH) ? savedInstanceState
-          .getString(SCREEN_PATH) : getScreenPath();
+              .getString(SCREEN_PATH) : getScreenPath();
       String tmpControllerState = savedInstanceState.containsKey(CONTROLLER_STATE) ? savedInstanceState
-          .getString(CONTROLLER_STATE) : getControllerState();
+              .getString(CONTROLLER_STATE) : getControllerState();
       setSectionScreenState(tmpScreenPath, tmpControllerState);
 
       setAuxillaryHash(savedInstanceState.containsKey(AUXILLARY_HASH) ? savedInstanceState
-          .getString(AUXILLARY_HASH) : getAuxillaryHash());
+              .getString(AUXILLARY_HASH) : getAuxillaryHash());
 
       if (savedInstanceState.containsKey(SESSION_VARIABLES)) {
         sessionVariables = savedInstanceState.getBundle(SESSION_VARIABLES);
@@ -993,7 +998,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
       if (savedInstanceState.containsKey(SECTION_STATE_SCREEN_HISTORY)) {
         sectionStateScreenHistory = savedInstanceState
-            .getParcelableArrayList(SECTION_STATE_SCREEN_HISTORY);
+                .getParcelableArrayList(SECTION_STATE_SCREEN_HISTORY);
       }
     } else if (formUri != null) {
       // request specifies a specific formUri -- try to open that
@@ -1025,6 +1030,10 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
+    //Disable StrictMode.ThreadPolicy to perform network calls in the UI thread.
+    //Yes, it's not the good practice, but this is just a tutorial!
+    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+    StrictMode.setThreadPolicy(policy);
     super.onCreateOptionsMenu(menu);
 
     int showOption = MenuItem.SHOW_AS_ACTION_IF_ROOM;
@@ -1036,7 +1045,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
       item = menu.add(Menu.NONE, MENU_MAIN_MENU, Menu.NONE, getString(R.string.main_menu));
       item.setIcon(R.drawable.ic_action_home).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-      
+
       //item = menu.add(Menu.NONE, MENU_FILL_FORM, Menu.NONE, getString(R.string.enter_data_button));
       //item.setIcon(R.drawable.ic_action_collections_collection).setShowAsAction(showOption);
 
@@ -1051,72 +1060,72 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       }
 
       String send = PropertiesSingleton.getProperty(appName,
-          AdminPreferencesActivity.KEY_SEND_FINALIZED);
+              AdminPreferencesActivity.KEY_SEND_FINALIZED);
       if (send.equalsIgnoreCase("true")) {
         item = menu.add(Menu.NONE, MENU_PUSH_FORMS, Menu.NONE, getString(R.string.send_data));
         item.setIcon(R.drawable.ic_action_av_upload).setShowAsAction(showOption);
       }
 
       String manage = PropertiesSingleton.getProperty(appName,
-          AdminPreferencesActivity.KEY_MANAGE_FORMS);
+              AdminPreferencesActivity.KEY_MANAGE_FORMS);
       if (manage.equalsIgnoreCase("true")) {
         item = menu.add(Menu.NONE, MENU_MANAGE_FORMS, Menu.NONE, getString(R.string.manage_files));
         item.setIcon(R.drawable.trash).setShowAsAction(showOption);
       }
 
       String settings = PropertiesSingleton.getProperty(appName,
-          AdminPreferencesActivity.KEY_ACCESS_SETTINGS);
+              AdminPreferencesActivity.KEY_ACCESS_SETTINGS);
       if (settings.equalsIgnoreCase("true")) {
         item = menu.add(Menu.NONE, MENU_PREFERENCES, Menu.NONE,
-            getString(R.string.general_preferences));
+                getString(R.string.general_preferences));
         item.setIcon(R.drawable.ic_menu_preferences).setShowAsAction(showOption);
       }
       item = menu.add(Menu.NONE, MENU_ADMIN_PREFERENCES, Menu.NONE,
-          getString(R.string.admin_preferences));
+              getString(R.string.admin_preferences));
       item.setIcon(R.drawable.ic_action_device_access_accounts).setShowAsAction(showOption);
 
       String backup = PropertiesSingleton.getProperty(appName,
               AdminPreferencesActivity.KEY_BACKUP_CENSUS);
       if (backup != null && backup.equalsIgnoreCase("true")) {
-    	  item = menu.add(Menu.NONE, MENU_BACKUP_CENSUS, Menu.NONE, getString(R.string.backup_census));
-    	  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        item = menu.add(Menu.NONE, MENU_BACKUP_CENSUS, Menu.NONE, getString(R.string.backup_census));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       }
-      
+
       String restore = PropertiesSingleton.getProperty(appName,
               AdminPreferencesActivity.KEY_RESTORE_CENSUS);
       if (restore != null && restore.equalsIgnoreCase("true")) {
-    	  item = menu.add(Menu.NONE, MENU_RESTORE_CENSUS, Menu.NONE, getString(R.string.restore_census));
-    	  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        item = menu.add(Menu.NONE, MENU_RESTORE_CENSUS, Menu.NONE, getString(R.string.restore_census));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       }
-      
+
       String invalidateCensus = PropertiesSingleton.getProperty(appName,
               AdminPreferencesActivity.KEY_INVALIDATE_CENSUS);
       if (invalidateCensus != null && invalidateCensus.equalsIgnoreCase("true")) {
-    	  item = menu.add(Menu.NONE, MENU_MARK_CENSUS_AS_INVALID, Menu.NONE, getString(R.string.invalidate_census));
-    	  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        item = menu.add(Menu.NONE, MENU_MARK_CENSUS_AS_INVALID, Menu.NONE, getString(R.string.invalidate_census));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       }
-      
+
       String edit = PropertiesSingleton.getProperty(appName,
               AdminPreferencesActivity.KEY_EDIT_CENSUS);
       if (edit != null && edit.equalsIgnoreCase("true")) {
-    	  item = menu.add(Menu.NONE, MENU_EDIT_CENSUS, Menu.NONE, getString(R.string.edit_census));
-    	  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        item = menu.add(Menu.NONE, MENU_EDIT_CENSUS, Menu.NONE, getString(R.string.edit_census));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       }
-      
+
       String removeCensus = PropertiesSingleton.getProperty(appName,
               AdminPreferencesActivity.KEY_REMOVE_CENSUS);
       if (removeCensus != null && removeCensus.equalsIgnoreCase("true")) {
-    	  item = menu.add(Menu.NONE, MENU_REMOVE_CENSUS, Menu.NONE, getString(R.string.remove_census));
-    	  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        item = menu.add(Menu.NONE, MENU_REMOVE_CENSUS, Menu.NONE, getString(R.string.remove_census));
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       }
-      
+
       /*String send_receive_bt = PropertiesSingleton.getProperty(appName,
               AdminPreferencesActivity.KEY_SEND_RECEIVE_BLUETOOTH);
       if (send_receive_bt != null && send_receive_bt.equalsIgnoreCase("true")) {
     	  item = menu.add(Menu.NONE, MENU_SEND_REVEIVE_BLUETOOTH, Menu.NONE, getString(R.string.send_receive_bluetooth));
     	  item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
       }*/
-      
+
       item = menu.add(Menu.NONE, MENU_ABOUT, Menu.NONE, getString(R.string.about));
       item.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
     } else {
@@ -1131,22 +1140,22 @@ public class MainMenuActivity extends Activity implements ODKActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     /*
      * if (item.getItemId() == MENU_FILL_FORM) {
-      swapToFragmentView(ScreenList.FORM_CHOOSER); return true; } else 
+      swapToFragmentView(ScreenList.FORM_CHOOSER); return true; } else
      */
-	
-	if (item.getItemId() == MENU_MAIN_MENU) {
-		swapToFragmentView(ScreenList.MAIN_MENU);
-		
-		return true;
-	} else if (item.getItemId() == MENU_PULL_FORMS) {
+
+    if (item.getItemId() == MENU_MAIN_MENU) {
+      swapToFragmentView(ScreenList.MAIN_MENU);
+
+      return true;
+    } else if (item.getItemId() == MENU_PULL_FORMS) {
       swapToFragmentView(ScreenList.FORM_DOWNLOADER);
       return true;
     } else if (item.getItemId() == MENU_CLOUD_FORMS) {
       try {
         Intent syncIntent = new Intent();
         syncIntent.setComponent(new ComponentName(
-        		"org.path.sync",
-        		"org.opendatakit.sync.activities.SyncActivity"));
+                "org.path.sync",
+                "org.opendatakit.sync.activities.SyncActivity"));
         syncIntent.setAction(Intent.ACTION_DEFAULT);
         Bundle bundle = new Bundle();
         bundle.putString(APP_NAME, appName);
@@ -1155,7 +1164,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       } catch (ActivityNotFoundException e) {
         WebLogger.getLogger(getAppName()).printStackTrace(e);
         Toast.makeText(this, R.string.sync_not_found, Toast.LENGTH_LONG)
-        	 .show();
+                .show();
       }
       return true;
     } else if (item.getItemId() == MENU_MANAGE_FORMS) {
@@ -1175,11 +1184,11 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       startActivity(ig);
       return true;
     } else if (item.getItemId() == MENU_ADMIN_PREFERENCES) {
-      String pw = PropertiesSingleton.getProperty(appName, 
-    		  AdminPreferencesActivity.KEY_ADMIN_PW);
+      String pw = PropertiesSingleton.getProperty(appName,
+              AdminPreferencesActivity.KEY_ADMIN_PW);
       if (pw == null || "".equalsIgnoreCase(pw)) {
-        Intent i = new Intent(getApplicationContext(), 
-        		AdminPreferencesActivity.class);
+        Intent i = new Intent(getApplicationContext(),
+                AdminPreferencesActivity.class);
         // TODO: convert this activity into a preferences fragment
         i.putExtra(APP_NAME, getAppName());
         startActivity(i);
@@ -1188,35 +1197,40 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       }
       return true;
     }  else if(item.getItemId() == MENU_BACKUP_CENSUS) {
-		if(CensusUtil.getCount(this) == 0) {
-			Toast.makeText(this, getString(R.string.census_db_empty), Toast.LENGTH_LONG).show();
-		} else {
-			BackupRestoreUtils.BackupResult result = BackupRestoreUtils.simpleBackup(this, getAppName());
-			if(result.getSuccess() == true) {
-				Toast.makeText(this, getString(R.string.backup_successful, result.getDatabaseFileName()), Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(this, getString(R.string.backup_unsuccessful, result.getDatabaseFileName()), Toast.LENGTH_LONG).show();
-			}
-		}
-		return true;
-	} else if(item.getItemId() == MENU_RESTORE_CENSUS) {
-		swapToFragmentView(ScreenList.RESTORE_MODULE);
-		return true;
-	} else if(item.getItemId() == MENU_EDIT_CENSUS) {
-		BackupRestoreUtils.backupCensus(Survey.getInstance().getApplicationContext(), "survey");
-		swapToFragmentView(ScreenList.EDIT_CENSUS_MODULE);
-		return true;
-	} else if(item.getItemId() == MENU_REMOVE_CENSUS) {
-		swapToFragmentView(ScreenList.REMOVE_CENSUS_MODULE);
-		return true;
-	}  else if(item.getItemId() == MENU_MARK_CENSUS_AS_INVALID) {
-		swapToFragmentView(ScreenList.INVALIDATE_CENSUS_MODULE);
-		return true;
-	}  /*else if(item.getItemId() == MENU_SEND_REVEIVE_BLUETOOTH) {
+      if(CensusUtil.getCount(this) == 0) {
+        Toast.makeText(this, getString(R.string.census_db_empty), Toast.LENGTH_LONG).show();
+      } else {
+        BackupRestoreUtils.BackupResult result = BackupRestoreUtils.simpleBackup(this, getAppName());
+        if(result.getSuccess() == true) {
+          Toast.makeText(this, getString(R.string.backup_successful, result.getDatabaseFileName()), Toast.LENGTH_LONG).show();
+        } else {
+          Toast.makeText(this, getString(R.string.backup_unsuccessful, result.getDatabaseFileName()), Toast.LENGTH_LONG).show();
+        }
+      }
+      return true;
+    } else if(item.getItemId() == MENU_RESTORE_CENSUS) {
+      swapToFragmentView(ScreenList.RESTORE_MODULE);
+      return true;
+    } else if(item.getItemId() == MENU_EDIT_CENSUS) {
+      BackupRestoreUtils.backupCensus(Survey.getInstance().getApplicationContext(), "survey");
+      swapToFragmentView(ScreenList.EDIT_CENSUS_MODULE);
+      return true;
+    } else if(item.getItemId() == MENU_REMOVE_CENSUS) {
+      swapToFragmentView(ScreenList.REMOVE_CENSUS_MODULE);
+      return true;
+    }  else if(item.getItemId() == MENU_MARK_CENSUS_AS_INVALID) {
+      swapToFragmentView(ScreenList.INVALIDATE_CENSUS_MODULE);
+      return true;
+    }  /*else if(item.getItemId() == MENU_SEND_REVEIVE_BLUETOOTH) {
 		swapToFragmentView(ScreenList.SEND_RECEIVE_BLUETOOTH_MODULE);
 		return true;
 	}*/ else if (item.getItemId() == MENU_ABOUT) {
       swapToFragmentView(ScreenList.ABOUT_MENU);
+      return true;
+    } else if (item.getItemId() == MENU_MAP) {
+      // Switching between the PDF Map and OSM Map
+      //swapToFragmentView(ScreenList.MAP_VIEWER);
+      swapToFragmentView(ScreenList.PDF_MAP_VIEWER);
       return true;
     }
     return super.onOptionsItemSelected(item);
@@ -1275,13 +1289,13 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       @Override
       public void onClick(DialogInterface dialog, int button) {
         switch (button) {
-        case DialogInterface.BUTTON_POSITIVE:
-          if (shouldExit) {
-            Intent i = new Intent();
-            setResult(RESULT_CANCELED, i);
-            finish();
-          }
-          break;
+          case DialogInterface.BUTTON_POSITIVE:
+            if (shouldExit) {
+              Intent i = new Intent();
+              setResult(RESULT_CANCELED, i);
+              finish();
+            }
+            break;
         }
       }
     };
@@ -1304,36 +1318,36 @@ public class MainMenuActivity extends Activity implements ODKActivity {
     passwordDialog.setView(input, 20, 10, 20, 10);
 
     passwordDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.ok),
-        new DialogInterface.OnClickListener() {
-          public void onClick(DialogInterface dialog, int whichButton) {
-            String value = input.getText().toString();
-            String pw = PropertiesSingleton.getProperty(appName,
-                AdminPreferencesActivity.KEY_ADMIN_PW);
-            if (pw != null && pw.compareTo(value) == 0) {
-              Intent i = new Intent(getApplicationContext(), AdminPreferencesActivity.class);
-              // TODO: convert this activity into a preferences fragment
-              i.putExtra(APP_NAME, getAppName());
-              startActivity(i);
-              input.setText("");
-              passwordDialog.dismiss();
-            } else {
-              Toast.makeText(MainMenuActivity.this, getString(R.string.admin_password_incorrect),
-                  Toast.LENGTH_SHORT).show();
-            }
-          }
-        });
+            new DialogInterface.OnClickListener() {
+              public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                String pw = PropertiesSingleton.getProperty(appName,
+                        AdminPreferencesActivity.KEY_ADMIN_PW);
+                if (pw != null && pw.compareTo(value) == 0) {
+                  Intent i = new Intent(getApplicationContext(), AdminPreferencesActivity.class);
+                  // TODO: convert this activity into a preferences fragment
+                  i.putExtra(APP_NAME, getAppName());
+                  startActivity(i);
+                  input.setText("");
+                  passwordDialog.dismiss();
+                } else {
+                  Toast.makeText(MainMenuActivity.this, getString(R.string.admin_password_incorrect),
+                          Toast.LENGTH_SHORT).show();
+                }
+              }
+            });
 
     passwordDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancel),
-        new DialogInterface.OnClickListener() {
+            new DialogInterface.OnClickListener() {
 
-          public void onClick(DialogInterface dialog, int which) {
-            input.setText("");
-            return;
-          }
-        });
+              public void onClick(DialogInterface dialog, int which) {
+                input.setText("");
+                return;
+              }
+            });
 
     passwordDialog.getWindow().setSoftInputMode(
-        WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     mAlertDialog = passwordDialog;
     mAlertDialog.show();
   }
@@ -1342,7 +1356,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
   public synchronized Bitmap getDefaultVideoPoster() {
     if (mDefaultVideoPoster == null) {
       mDefaultVideoPoster = BitmapFactory.decodeResource(getResources(),
-          R.drawable.default_video_poster);
+              R.drawable.default_video_poster);
     }
     return mDefaultVideoPoster;
   }
@@ -1405,16 +1419,16 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
   public void swapToFragmentView(ScreenList newFragment) {
     WebLogger.getLogger(getAppName()).i(t, "swapToFragmentView: " + newFragment.toString());
-    
+
     String get = PropertiesSingleton.getProperty("survey",
-			AdminPreferencesActivity.KEY_TURN_ON_OFF_WIFI_AUTOMATICALLY);
-	if (!(get != null && get.equalsIgnoreCase("false"))) {
-		if(mWifiManager.isWifiEnabled() &&
-	              mWifiManager.getWifiState() != WifiManager.WIFI_STATE_DISABLED ) {
-	               mWifiManager.setWifiEnabled(false);
-	           } 
-	}
-	
+            AdminPreferencesActivity.KEY_TURN_ON_OFF_WIFI_AUTOMATICALLY);
+    if (!(get != null && get.equalsIgnoreCase("false"))) {
+      if(mWifiManager.isWifiEnabled() &&
+              mWifiManager.getWifiState() != WifiManager.WIFI_STATE_DISABLED ) {
+        mWifiManager.setWifiEnabled(false);
+      }
+    }
+
     FragmentManager mgr = getFragmentManager();
     Fragment f;
     if (newFragment == ScreenList.MAIN_SCREEN) {
@@ -1427,56 +1441,66 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       }
       newFragment = ScreenList.WEBKIT;
     } else if (newFragment == ScreenList.MAIN_MENU) {
-		f = mgr.findFragmentById(MainMenuFragment.ID);
-		if (f == null) {
-			f = new MainMenuFragment();
-		}
-	} else if (newFragment == ScreenList.COLLECT_MODULE) {
-		f = mgr.findFragmentById(CollectFragment.ID);
-		if (f == null) {
-			f = new CollectFragment();
-		}
-	} else if (newFragment == ScreenList.SEND_RECEIVE_WIFI_DIRECT_MODULE) {
-		f = mgr.findFragmentById(SendReceiveFragment.ID);
-		if (f == null) {
-			f = new SendReceiveFragment();
-		}
-	} /*else if (newFragment == ScreenList.SEND_RECEIVE_BLUETOOTH_MODULE) {
+      f = mgr.findFragmentById(MainMenuFragment.ID);
+      if (f == null) {
+        f = new MainMenuFragment();
+      }
+    } else if (newFragment == ScreenList.COLLECT_MODULE) {
+      f = mgr.findFragmentById(CollectFragment.ID);
+      if (f == null) {
+        f = new CollectFragment();
+      }
+    } else if (newFragment == ScreenList.SEND_RECEIVE_WIFI_DIRECT_MODULE) {
+      f = mgr.findFragmentById(SendReceiveFragment.ID);
+      if (f == null) {
+        f = new SendReceiveFragment();
+      }
+    } /*else if (newFragment == ScreenList.SEND_RECEIVE_BLUETOOTH_MODULE) {
 		f = mgr.findFragmentById(SendReceiveFragmentBT.ID);
 		if (f == null) {
 			f = new SendReceiveFragmentBT();
 		}
 	}*/ else if (newFragment == ScreenList.SELECT_MODULE) {
-		f = mgr.findFragmentById(SelectFragment.ID);
-		if (f == null) {
-			f = new SelectFragment();
-		}
-	}  else if (newFragment == ScreenList.NAVIGATE_MODULE) {
-		f = mgr.findFragmentById(NavigateFragment.ID);
-		if (f == null) {
-			f = new NavigateFragment();
-		}
-	}  else if (newFragment == ScreenList.RESTORE_MODULE) {
-		f = mgr.findFragmentById(RestoreFragment.ID);
-		if (f == null) {
-			f = new RestoreFragment();
-		}
-	} else if (newFragment == ScreenList.EDIT_CENSUS_MODULE) {
-		f = mgr.findFragmentById(EditCensusFragment.ID);
-		if (f == null) {
-			f = new EditCensusFragment();
-		}
-	} else if (newFragment == ScreenList.REMOVE_CENSUS_MODULE) {
-		f = mgr.findFragmentById(RemoveCensusFragment.ID);
-		if (f == null) {
-			f = new RemoveCensusFragment();
-		}
-	} else if (newFragment == ScreenList.INVALIDATE_CENSUS_MODULE) {
-		f = mgr.findFragmentById(InvalidateCensusFragment.ID);
-		if (f == null) {
-			f = new InvalidateCensusFragment();
-		}
-	} else if (newFragment == ScreenList.FORM_CHOOSER) {
+      f = mgr.findFragmentById(SelectFragment.ID);
+      if (f == null) {
+        f = new SelectFragment();
+      }
+    }  else if (newFragment == ScreenList.NAVIGATE_MODULE) {
+      f = mgr.findFragmentById(NavigateFragment.ID);
+      if (f == null) {
+        f = new NavigateFragment();
+      }
+    }  else if (newFragment == ScreenList.MAP_VIEWER) {
+      f = mgr.findFragmentById(OSMapFragment.ID);
+      if (f == null) {
+        f = new OSMapFragment();
+      }
+    } else if (newFragment == ScreenList.PDF_MAP_VIEWER) {
+      f = mgr.findFragmentById(PDFMapFragment.ID);
+      if (f == null) {
+        f = new PDFMapFragment();
+      }
+    } else if (newFragment == ScreenList.RESTORE_MODULE) {
+      f = mgr.findFragmentById(RestoreFragment.ID);
+      if (f == null) {
+        f = new RestoreFragment();
+      }
+    } else if (newFragment == ScreenList.EDIT_CENSUS_MODULE) {
+      f = mgr.findFragmentById(EditCensusFragment.ID);
+      if (f == null) {
+        f = new EditCensusFragment();
+      }
+    } else if (newFragment == ScreenList.REMOVE_CENSUS_MODULE) {
+      f = mgr.findFragmentById(RemoveCensusFragment.ID);
+      if (f == null) {
+        f = new RemoveCensusFragment();
+      }
+    } else if (newFragment == ScreenList.INVALIDATE_CENSUS_MODULE) {
+      f = mgr.findFragmentById(InvalidateCensusFragment.ID);
+      if (f == null) {
+        f = new InvalidateCensusFragment();
+      }
+    } else if (newFragment == ScreenList.FORM_CHOOSER) {
       f = mgr.findFragmentById(FormChooserListFragment.ID);
       if (f == null) {
         f = new FormChooserListFragment();
@@ -1491,8 +1515,8 @@ public class MainMenuActivity extends Activity implements ODKActivity {
           f = new InitializationFragment();
         }
         ((InitializationFragment) f)
-            .setFragmentToShowNext((currentFragment == null) ? ScreenList.FORM_CHOOSER.name()
-                : currentFragment.name());
+                .setFragmentToShowNext((currentFragment == null) ? ScreenList.FORM_CHOOSER.name()
+                        : currentFragment.name());
       }
     } else if (newFragment == ScreenList.FORM_DELETER) {
       f = mgr.findFragmentById(FormDeleteListFragment.ID);
@@ -1566,7 +1590,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
     // and see if we should re-initialize...
     if ((currentFragment != ScreenList.INITIALIZATION_DIALOG)
-        && Survey.getInstance().shouldRunInitializationTask(getAppName())) {
+            && Survey.getInstance().shouldRunInitializationTask(getAppName())) {
       WebLogger.getLogger(getAppName()).i(t, "swapToFragmentView -- calling clearRunInitializationTask");
       // and immediately clear the should-run flag...
       Survey.getInstance().clearRunInitializationTask(getAppName());
@@ -1622,16 +1646,16 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       return;
     }
     SectionScreenStateHistory lastSection = sectionStateScreenHistory.get(sectionStateScreenHistory
-        .size() - 1);
+            .size() - 1);
     lastSection.history.add(new ScreenState(lastSection.currentScreen.screenPath,
-        lastSection.currentScreen.state));
+            lastSection.currentScreen.state));
   }
 
   @Override
   public void setSectionScreenState(String screenPath, String state) {
     if (screenPath == null) {
       WebLogger.getLogger(getAppName()).e(t,
-          "pushSectionScreenState: NULL currentScreen.screenPath!");
+              "pushSectionScreenState: NULL currentScreen.screenPath!");
       return;
     } else {
       String[] splits = screenPath.split("/");
@@ -1665,7 +1689,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
     sectionStateScreenHistory.clear();
     sectionStateScreenHistory.add(new SectionScreenStateHistory());
     SectionScreenStateHistory lastSection = sectionStateScreenHistory.get(sectionStateScreenHistory
-        .size() - 1);
+            .size() - 1);
     lastSection.currentScreen.screenPath = "initial/0";
     lastSection.currentScreen.state = null;
     lastSection.history.clear();
@@ -1678,7 +1702,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       return null;
     }
     SectionScreenStateHistory lastSection = sectionStateScreenHistory.get(sectionStateScreenHistory
-        .size() - 1);
+            .size() - 1);
     return lastSection.currentScreen.state;
   }
 
@@ -1689,7 +1713,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       return null;
     }
     SectionScreenStateHistory lastSection = sectionStateScreenHistory.get(sectionStateScreenHistory
-        .size() - 1);
+            .size() - 1);
     return lastSection.currentScreen.screenPath;
   }
 
@@ -1747,7 +1771,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
 
     if (sectionStateScreenHistory.size() != 0) {
       SectionScreenStateHistory lastSection = sectionStateScreenHistory
-          .get(sectionStateScreenHistory.size() - 1);
+              .get(sectionStateScreenHistory.size() - 1);
       return lastSection.currentScreen.screenPath;
     }
 
@@ -1818,10 +1842,10 @@ public class MainMenuActivity extends Activity implements ODKActivity {
    */
   @Override
   public String doAction(
-      String page,
-      String path,
-      String action,
-      JSONObject valueContentMap) {
+          String page,
+          String path,
+          String action,
+          JSONObject valueContentMap) {
 
     // android.os.Debug.waitForDebugger();
 
@@ -1852,23 +1876,23 @@ public class MainMenuActivity extends Activity implements ODKActivity {
     }
 
     try {
-      
+
       String uriKey = "uri";
       String extrasKey = "extras";
       String packageKey = "package";
       String typeKey = "type";
       String dataKey = "data";
-      
+
       JSONObject valueMap = null;
       if (valueContentMap != null) {
-        
+
         // do type first, as it says in the spec this call deletes any other
         // data (eg by setData()) on the intent.
         if (valueContentMap.has(typeKey)) {
           String type = valueContentMap.getString(typeKey);
           i.setType(type);
         }
-        
+
         if (valueContentMap.has(uriKey) || valueContentMap.has(dataKey)) {
           // as it currently stands, the data property can be in either the uri
           // or data keys.
@@ -1885,22 +1909,22 @@ public class MainMenuActivity extends Activity implements ODKActivity {
             i.setData(uri);
           }
         }
-        
+
         if (valueContentMap.has(extrasKey)) {
           valueMap = valueContentMap.getJSONObject(extrasKey);
         }
-        
+
         if (valueContentMap.has(packageKey)) {
           String packageStr = valueContentMap.getString(packageKey);
           i.setPackage(packageStr);
         }
-        
+
       }
 
       if (valueMap != null) {
         Bundle b;
         final DynamicPropertiesCallback cb = new DynamicPropertiesCallback(this, getAppName(),
-            getCurrentForm().tableId, getInstanceId());
+                getCurrentForm().tableId, getInstanceId());
 
         b = AndroidUtils.convertToBundle(valueMap, new MacroStringExpander() {
 
@@ -1908,14 +1932,14 @@ public class MainMenuActivity extends Activity implements ODKActivity {
           public String expandString(String value) {
             if (value != null && value.startsWith("opendatakit-macro(") && value.endsWith(")")) {
               String term = value.substring("opendatakit-macro(".length(), value.length() - 1)
-                  .trim();
+                      .trim();
               String v = mPropertyManager.getSingularProperty(term, cb);
               if (v != null) {
                 return v;
               } else {
                 WebLogger.getLogger(getAppName()).e(t, "Unable to process opendatakit-macro: " + value);
                 throw new IllegalArgumentException(
-                    "Unable to process opendatakit-macro expression: " + value);
+                        "Unable to process opendatakit-macro expression: " + value);
               }
             } else {
               return value;
@@ -1931,7 +1955,7 @@ public class MainMenuActivity extends Activity implements ODKActivity {
         if (!i.hasExtra(APP_NAME)) {
           i.putExtra(APP_NAME, getAppName());
           WebLogger.getLogger(getAppName()).w(t, "doAction into Survey or Tables does not supply an appName. Adding: "
-              + getAppName());
+                  + getAppName());
         }
       }
     } catch (Exception ex) {
@@ -1979,14 +2003,14 @@ public class MainMenuActivity extends Activity implements ODKActivity {
         Bundle b = (intent == null) ? null : intent.getExtras();
         JSONObject val = (b == null) ? null : AndroidUtils.convertFromBundle(getAppName(), b);
         jsonObject = "{\"status\":" + Integer.toString(resultCode)
-            + ((val == null) ? "" : ", \"result\":" + val.toString()) + "}";
+                + ((val == null) ? "" : ", \"result\":" + val.toString()) + "}";
         WebLogger.getLogger(getAppName()).i(t, "HANDLER_ACTIVITY_CODE: " + jsonObject);
 
         view.doActionResult(pageWaitingForData, pathWaitingForData, actionWaitingForData,
-            jsonObject);
+                jsonObject);
       } catch (Exception e) {
         view.doActionResult(pageWaitingForData, pathWaitingForData, actionWaitingForData,
-            "{ \"status\":0, \"result\":\"" + e.toString() + "\"}");
+                "{ \"status\":0, \"result\":\"" + e.toString() + "\"}");
       } finally {
         pathWaitingForData = null;
         pageWaitingForData = null;
@@ -1996,28 +2020,28 @@ public class MainMenuActivity extends Activity implements ODKActivity {
       Survey.getInstance().setRunInitializationTask(getAppName());
       this.swapToFragmentView((currentFragment == null) ? ScreenList.FORM_CHOOSER : currentFragment);
     } else if(requestCode == SURVEY_REQUEST_CODE) {
-    	if(SELECTED_CENSUS != null) {
-    		String tableId = PropertiesSingleton.getProperty("survey",
-    				AdminPreferencesActivity.KEY_TABLE_ID);
-    		if(tableId != null) {
-    			int questionnaireStatus = CensusUtil.isQuestionnaireFinalized(this, tableId, SELECTED_CENSUS.getInstanceId());
-        		CensusUtil.updateCensusQuestionnaireStatus(this,  SELECTED_CENSUS.getInstanceId(), questionnaireStatus);
-    		}	
-    	}
+      if(SELECTED_CENSUS != null) {
+        String tableId = PropertiesSingleton.getProperty("survey",
+                AdminPreferencesActivity.KEY_TABLE_ID);
+        if(tableId != null) {
+          int questionnaireStatus = CensusUtil.isQuestionnaireFinalized(this, tableId, SELECTED_CENSUS.getInstanceId());
+          CensusUtil.updateCensusQuestionnaireStatus(this,  SELECTED_CENSUS.getInstanceId(), questionnaireStatus);
+        }
+      }
     } else if(requestCode == CENSUS_REQUEST_CODE) {
-    	if(SELECTED_CENSUS != null) {
-    		CensusModel census = CensusUtil.getCensusFromWebDb(this, SELECTED_CENSUS.getInstanceId());
-    		if(census != null) {
-    			census.setProcessed(SELECTED_CENSUS.getProcessed());
-    			CensusUtil.insertOrUpdate(this, census, false);
-    		}
-    	}	
+      if(SELECTED_CENSUS != null) {
+        CensusModel census = CensusUtil.getCensusFromWebDb(this, SELECTED_CENSUS.getInstanceId());
+        if(census != null) {
+          census.setProcessed(SELECTED_CENSUS.getProcessed());
+          CensusUtil.insertOrUpdate(this, census, false);
+        }
+      }
     }
   }
-  
+
   @Override
   public void swapToCollectFragmentView() {
-  	EDIT_POINT = true;
-  	swapToFragmentView(ScreenList.COLLECT_MODULE);
+    EDIT_POINT = true;
+    swapToFragmentView(ScreenList.COLLECT_MODULE);
   }
 }

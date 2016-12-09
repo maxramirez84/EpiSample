@@ -266,11 +266,11 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mCensus = null;
-        mConnectionManager = null;
-        mPdfView = null;
-        mBit = null;
-        mCurrentSelectedCencus = null;
+        if (mCensus != null){mCensus = null;}
+        if (mConnectionManager != null){mConnectionManager = null;}
+        if (mPdfView != null){mPdfView = null;}
+        if (mBit != null){mBit=null;}
+        if (mCurrentSelectedCencus != null) {mCurrentSelectedCencus = null;}
         mGpsCoords.clear();
 
     }
@@ -281,8 +281,8 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
         savedState = saveState();
         mDirectionProvider.stop();
         mDirectionProvider.unregisterSensorsListener();
-        mDirectionProvider = null;
-        mCurrentSelectedCencus.setIsSelected(false);
+        if (mDirectionProvider != null){mDirectionProvider = null;}
+        if (mCurrentSelectedCencus != null){mCurrentSelectedCencus.setIsSelected(false);}
         isMapReindered = false;
         super.onDestroyView();
 

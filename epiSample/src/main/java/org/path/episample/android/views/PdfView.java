@@ -311,7 +311,7 @@ public class PdfView extends ImageView {
 			if (myOldLocation != null){
 				mCanvas.drawCircle((float)myOldLocation.x, (float)myOldLocation.y,3.0f,mPaint);
 			}
-			mPaint.setColor(Color.BLACK);
+			mPaint.setColor(Color.GREEN);
 			mCanvas.drawCircle((float)myLocation.x, (float)myLocation.y,3.0f,mPaint);
 			myOldLocation = myLocation;
 			savePreviousImageValues();
