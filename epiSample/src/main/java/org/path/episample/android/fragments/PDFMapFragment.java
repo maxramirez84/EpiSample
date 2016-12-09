@@ -246,15 +246,18 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    updateLocationCompass();
-                    mPdfView.setImageBitmap(mBit);
-                    mPdfView.setGPSBoundsCords(mGpsCoords);
-                    mPdfView.setCensusData(mCensus);
-                    mPdfView.setAdjustViewBounds(true);
-                    mPdfView.setFocusableInTouchMode(true);
-                    mPdfView.setFocusable(true);
-                    mPdfView.invalidate();
-                    isMapReindered = true;
+                    if (mBit != null) {
+                        updateLocationCompass();
+                        mPdfView.setImageBitmap(mBit);
+                        mPdfView.setGPSBoundsCords(mGpsCoords);
+                        mPdfView.setCensusData(mCensus);
+                        mPdfView.setAdjustViewBounds(true);
+                        mPdfView.setFocusableInTouchMode(true);
+                        mPdfView.setFocusable(true);
+                        mPdfView.invalidate();
+                        isMapReindered = true;
+                    }
+                    else {}
 
                 }
                 break;
