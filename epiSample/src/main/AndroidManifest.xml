@@ -1,24 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.path.episample.android"
     android:versionCode="10"
-    android:versionName="1.0.5" >
+    android:versionName="1.0.5">
 
     <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="21"
+        android:targetSdkVersion="23" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="com.android.vending.CHECK_LICENSE"/>
-	<uses-permission android:required="true" android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_STATE"
+        android:required="true" />
 
     <supports-screens
         android:anyDensity="true"
@@ -27,173 +31,173 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
-        android:name="org.path.episample.android.application.Survey"
-        android:icon="@drawable/ic_episample"
-      	android:logo="@drawable/ic_episample"
-        android:label="@string/app_name"
-        android:theme="@style/Theme.EpiSample"
+        android:name=".application.Survey"
         android:allowBackup="false"
-        android:installLocation="auto"
-        android:largeHeap="true"
         android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_episample"
+        android:installLocation="auto"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:logo="@drawable/ic_episample"
+        android:theme="@style/Theme.EpiSample"
         tools:replace="android:icon,android:theme">
 
-        <!--  TODO: shouldn't this be established by androidcommon directly -->
-	   <provider
-            android:exported="true"
-	        android:syncable="false"
-	        android:initOrder="2"
+        <!-- TODO: shouldn't this be established by androidcommon directly -->
+        <provider
+            android:name=".provider.FormsProvider"
             android:authorities="org.path.common.android.provider.forms"
-            android:name="org.path.episample.android.provider.FormsProvider" />
-        <provider
             android:exported="true"
-	        android:syncable="false"
-	        android:initOrder="3"
+            android:initOrder="2"
+            android:syncable="false" />
+        <provider
+            android:name=".provider.InstanceProvider"
             android:authorities="org.path.common.android.provider.instances"
-            android:name="org.path.episample.android.provider.InstanceProvider" />
-        <provider
             android:exported="true"
-	        android:syncable="false"
-	        android:initOrder="4"
+            android:initOrder="3"
+            android:syncable="false" />
+        <provider
+            android:name=".provider.SubmissionProvider"
             android:authorities="org.path.common.android.provider.submission.xml;org.path.common.android.provider.submission.json"
-            android:name="org.path.episample.android.provider.SubmissionProvider"
-            />
+            android:exported="true"
+            android:initOrder="4"
+            android:syncable="false" />
 
         <activity
-            android:name="org.path.episample.android.activities.MainMenuActivity"
+            android:name=".activities.MainMenuActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"></activity>
         <activity
-            android:name="org.path.episample.android.activities.AccountList"
+            android:name=".activities.AccountList"
             android:exported="false"
             android:label="@string/app_name" />
         <activity
-            android:name="org.path.episample.android.activities.AccountInfo"
+            android:name=".activities.AccountInfo"
             android:exported="false"
             android:label="@string/app_name" />
         <activity
-            android:name="org.path.episample.android.preferences.AdminPreferencesActivity"
+            android:name=".preferences.AdminPreferencesActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.preferences.PreferencesActivity"
+            android:name=".preferences.PreferencesActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaCaptureImageActivity"
+            android:name=".activities.MediaCaptureImageActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaChooseImageActivity"
+            android:name=".activities.MediaChooseImageActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaDeleteImageActivity"
+            android:name=".activities.MediaDeleteImageActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaCaptureAudioActivity"
+            android:name=".activities.MediaCaptureAudioActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaChooseAudioActivity"
+            android:name=".activities.MediaChooseAudioActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaDeleteAudioActivity"
+            android:name=".activities.MediaDeleteAudioActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaCaptureVideoActivity"
+            android:name=".activities.MediaCaptureVideoActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaChooseVideoActivity"
+            android:name=".activities.MediaChooseVideoActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.MediaDeleteVideoActivity"
+            android:name=".activities.MediaDeleteVideoActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.activities.GeoPointActivity"
+            android:name=".activities.GeoPointActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="org.path.episample.android.preferences.PlaceListActivity"
+            android:name=".preferences.PlaceListActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/NoTitleBarDialog"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarDialog" />
         <activity
-            android:name="org.path.episample.android.preferences.LoadPointsActivity"
+            android:name=".preferences.LoadPointsActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/NoTitleBarDialog"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarDialog" />
         <activity
-            android:name="org.path.episample.android.activities.SelectPlaceNameActivity"
+            android:name=".activities.SelectPlaceNameActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/NoTitleBarDialog"
-            android:screenOrientation="portrait" /> 
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarDialog" />
         <activity
-            android:name="org.path.episample.android.activities.ClearAllActivity"
+            android:name=".activities.ClearAllActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/NoTitleBarDialog"
-            android:screenOrientation="portrait" /> 
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarDialog" />
         <activity
-            android:name="org.path.episample.android.activities.ClearAllCensusPasswordDialogActivity"
+            android:name=".activities.ClearAllCensusPasswordDialogActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/NoTitleBarDialog"
-            android:screenOrientation="portrait" />  
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarDialog" />
         <activity
-            android:name="org.path.episample.android.activities.ConnectWithPeersActivity"
+            android:name=".activities.ConnectWithPeersActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/TransparentDialog"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/TransparentDialog" />
         <activity
-            android:name="org.path.episample.android.activities.ConnectWithPeersBTActivity"
+            android:name=".activities.ConnectWithPeersBTActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/TransparentDialog"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/TransparentDialog" />
         <activity
-            android:name="org.path.episample.android.activities.FilterCensusListActivity"
+            android:name=".activities.FilterCensusListActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/NoTitleBarDialog"
-            android:screenOrientation="portrait" />     
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarDialog" />
         <activity
-            android:name="org.path.episample.android.activities.FormChooserListActivity"
+            android:name=".activities.FormChooserListActivity"
             android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/NoTitleBarDialog"
-            android:screenOrientation="portrait" />  
+            android:screenOrientation="portrait"
+            android:theme="@style/NoTitleBarDialog" />
         <activity
-            android:name="org.path.episample.android.activities.SplashScreenActivity"
+            android:name=".activities.SplashScreenActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -213,9 +217,9 @@
         </activity>
         <!-- Enable Shortcuts for Command Actions -->
         <activity
-            android:name="org.path.episample.android.activities.AndroidShortcuts"
+            android:name=".activities.AndroidShortcuts"
             android:label="@string/shortcut_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />
 
@@ -223,26 +227,28 @@
             </intent-filter>
         </activity>
 
-        <service android:enabled="true" android:name="org.path.episample.android.provider.DbShimService"
-            	android:exported="false"
-            	android:permission="org.path.episample.android.W3C_SQL_SHIM_SERVICE" />
+        <service
+            android:name=".provider.DbShimService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="org.path.episample.android.W3C_SQL_SHIM_SERVICE" />
+        <service android:name=".services.FullBackupService"></service>
 
-         <service
-            android:name="org.path.episample.android.services.FullBackupService">
-            
-        </service>
-        
-        <receiver android:name="org.path.episample.android.receivers.FullBackupBroadcastReceiver" >
+        <receiver android:name=".receivers.FullBackupBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="org.path.episample.android.BACKUP_NOW" />
             </intent-filter>
+        </receiver>
 
-		</receiver>
-		
         <uses-library
             android:name="com.google.android.maps"
             android:required="false" />
+
+        <activity
+            android:name=".activities.MapActivity"
+            android:label="@string/title_activity_map"></activity>
     </application>
+
 </manifest>
