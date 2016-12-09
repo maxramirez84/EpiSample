@@ -15,14 +15,14 @@
 
 package org.path.common.android.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.path.common.android.provider.CensusColumns;
 import org.path.common.android.utilities.JSONUtils;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
 
 /*
  * @author belendia@gmail.com
@@ -35,6 +35,7 @@ public class CensusModel implements Parcelable {
 	public static int ALTERNATE_POINT = 10;
 
 	private String instanceId;
+	private boolean mIsSelected = false;
 
 	public String getInstanceId() {
 		return instanceId;
@@ -48,6 +49,14 @@ public class CensusModel implements Parcelable {
 
 	public String getPlaceName() {
 		return placeName;
+	}
+	public boolean isSelected() {
+		return mIsSelected;
+	}
+
+	public void setIsSelected(boolean selected) {
+		 mIsSelected = selected;
+
 	}
 
 	public void setPlaceName(String value) {

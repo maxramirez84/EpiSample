@@ -15,36 +15,6 @@
 
 package org.path.episample.android.fragments;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.path.common.android.data.CensusModel;
-import org.path.common.android.data.PlaceModel;
-import org.path.common.android.utilities.CensusUtil;
-import org.path.common.android.utilities.CensusUtil.FilterCensusList;
-import org.path.common.android.utilities.CensusUtil.Sort;
-import org.path.common.android.utilities.PlaceNameUtil;
-import org.path.common.android.utilities.PlaceNameUtil.HirarchyOrder;
-import org.path.common.android.utilities.WebLogger;
-import org.path.episample.android.R;
-import org.path.episample.android.activities.FilterCensusListActivity;
-import org.path.episample.android.activities.MainMenuActivity;
-import org.path.episample.android.activities.ODKActivity;
-import org.path.episample.android.activities.SelectPlaceNameActivity;
-import org.path.episample.android.application.Survey;
-import org.path.episample.android.fragments.AlertDialogFragment.ConfirmAlertDialog;
-import org.path.episample.android.logic.PropertiesSingleton;
-import org.path.episample.android.preferences.AdminPreferencesActivity;
-import org.path.episample.android.provider.DirectionProvider;
-import org.path.episample.android.provider.DirectionProvider.DirectionEventListener;
-import org.path.episample.android.provider.DirectionProvider.LocationEventListener;
-import org.path.episample.android.tasks.CensusListLoader;
-import org.path.episample.android.utilities.DistanceUtil;
-import org.path.episample.android.utilities.SurveyUtil;
-import org.path.episample.android.utilities.SurveyUtil.SurveyFormParameters;
-import org.path.episample.android.views.CompassView;
-
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ListFragment;
@@ -76,6 +46,36 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.todddavies.components.progressbar.ProgressWheel;
+
+import org.path.common.android.data.CensusModel;
+import org.path.common.android.data.PlaceModel;
+import org.path.common.android.utilities.CensusUtil;
+import org.path.common.android.utilities.CensusUtil.FilterCensusList;
+import org.path.common.android.utilities.CensusUtil.Sort;
+import org.path.common.android.utilities.PlaceNameUtil;
+import org.path.common.android.utilities.PlaceNameUtil.HirarchyOrder;
+import org.path.common.android.utilities.WebLogger;
+import org.path.episample.android.R;
+import org.path.episample.android.activities.FilterCensusListActivity;
+import org.path.episample.android.activities.MainMenuActivity;
+import org.path.episample.android.activities.ODKActivity;
+import org.path.episample.android.activities.SelectPlaceNameActivity;
+import org.path.episample.android.application.Survey;
+import org.path.episample.android.fragments.AlertDialogFragment.ConfirmAlertDialog;
+import org.path.episample.android.logic.PropertiesSingleton;
+import org.path.episample.android.preferences.AdminPreferencesActivity;
+import org.path.episample.android.provider.DirectionProvider;
+import org.path.episample.android.provider.DirectionProvider.DirectionEventListener;
+import org.path.episample.android.provider.DirectionProvider.LocationEventListener;
+import org.path.episample.android.tasks.CensusListLoader;
+import org.path.episample.android.utilities.DistanceUtil;
+import org.path.episample.android.utilities.SurveyUtil;
+import org.path.episample.android.utilities.SurveyUtil.SurveyFormParameters;
+import org.path.episample.android.views.CompassView;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fragment displaying the navigate modules in the app.
@@ -122,6 +122,7 @@ public class NavigateFragment extends ListFragment implements
 
 	private CensusListAdapter mInstances;
 	private static int mSelectedCensusRow = -1;
+	public static int mPosition = -1;
 	// private CensusModel mSelectedCensus;
 
 	private int mGPSAccuracyThresholds = 10;
@@ -251,7 +252,7 @@ public class NavigateFragment extends ListFragment implements
 		} else {
 			setSpinnerColor(Color.Red);
 		}
-		
+
 		mInstances = new CensusListAdapter(getActivity());
 		setListAdapter(mInstances);
 		mRefreshLayout.setOnRefreshListener(onRefreshListener);
@@ -343,7 +344,7 @@ public class NavigateFragment extends ListFragment implements
 			changePlace();
 			return true;
 		case R.id.map_menu:
-
+			showPDFMap();
 			return true;
 		default:
 			break;
@@ -355,9 +356,6 @@ public class NavigateFragment extends ListFragment implements
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		// outState.putInt(SORT, mSort.ordinal());
-		outState.putString(DIALOG_MSG, mAlertMsg);
-		// outState.putParcelable(SELECTED_CENSUS, mSelectedCensus);
 	}
 
 	@Override
@@ -524,6 +522,16 @@ public class NavigateFragment extends ListFragment implements
 		startActivityForResult(intent, FILTER_REQUEST_CODE);
 	}
 
+	public void showOSMMap() {
+		((ODKActivity) getActivity())
+				.swapToFragmentView(MainMenuActivity.ScreenList.MAP_VIEWER);
+	}
+
+	public void showPDFMap() {
+		((ODKActivity) getActivity())
+				.swapToFragmentView(MainMenuActivity.ScreenList.PDF_MAP_VIEWER);
+	}
+
 	public void changePlace() {
 		Intent intent = new Intent(getActivity(), SelectPlaceNameActivity.class);
 		if (mSelectedPlaceName != null && mSelectedPlaceName.length() > 0) {
@@ -657,13 +665,13 @@ public class NavigateFragment extends ListFragment implements
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-
 		itemSelected(position);
 	}
 
+
 	private void itemSelected(int position) {
 		mSelectedCensusRow = position;
-
+		mPosition = mSelectedCensusRow;
 		CensusModel census = (((CensusListAdapter) getListAdapter())
 				.getItem(position));
 		String instanceId = census.getInstanceId();
@@ -684,7 +692,7 @@ public class NavigateFragment extends ListFragment implements
 		}
 	}
 
-	private static class CensusListAdapter extends ArrayAdapter<CensusModel> {
+	protected static class CensusListAdapter extends ArrayAdapter<CensusModel> {
 		private final LayoutInflater mInflater;
 		private Context mContext;
 
@@ -942,6 +950,7 @@ public class NavigateFragment extends ListFragment implements
 					for (int i = 0; i < numOfCensus; i++) {
 						CensusModel census = (((CensusListAdapter) getListAdapter())
 								.getItem(i));
+						census.setIsSelected(false);
 						census.setDistance(DistanceUtil.getDistance(
 								mDirectionProvider.getCurrentLocation()
 										.getLatitude(), mDirectionProvider
