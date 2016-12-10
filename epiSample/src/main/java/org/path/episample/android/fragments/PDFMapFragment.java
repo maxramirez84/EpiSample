@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.path.common.android.data.CensusModel;
 import org.path.common.android.data.PlaceModel;
@@ -244,6 +245,7 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
                         mBit = ParsePDF(filePath, mGpsCoords);
 
                     } catch (IOException e) {
+                        Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                     if (mBit != null) {
