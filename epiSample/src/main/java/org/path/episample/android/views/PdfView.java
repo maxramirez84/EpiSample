@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -258,14 +259,16 @@ public class PdfView extends ImageView {
 		@Override
 		public void setImageBitmap(Bitmap bm) {
 			mOriginalBitMap = bm;
-			mCanvas = new Canvas(bm);
+			super.setImageBitmap(mOriginalBitMap);
+			mCanvas = new Canvas(mOriginalBitMap);
 			mPaint = new Paint();
 			mHeight = mCanvas.getHeight();
 			mWidth = mCanvas.getWidth();
 			mScaleFactor = mHeight/20;
-			super.setImageBitmap(bm);
 			savePreviousImageValues();
 			fitImageToView();
+
+			mCanvas.save();
 		}
 		public void setCensusMap() {
 			setCensusMapLocations();
@@ -298,8 +301,6 @@ public class PdfView extends ImageView {
 					mCanvas.drawBitmap(marker1,(float)CensusPoints.x,(float)CensusPoints.y,null);
 				}
 
-				//mCanvas.drawCircle((float)CensusPoints.x,(float)CensusPoints.y,5.0f,mPaint);
-
 			}
 			savePreviousImageValues();
 			fitImageToView();
@@ -319,6 +320,14 @@ public class PdfView extends ImageView {
 
 	}
 
+		public void cleanCanvas(){
+		//	mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+			mCanvas = null;
+			mPaint = null;
+			mOriginalBitMap = null;
+			mCensusData = null;
+
+		}
 		@Override
 		public void setImageDrawable(Drawable drawable) {
 			super.setImageDrawable(drawable);

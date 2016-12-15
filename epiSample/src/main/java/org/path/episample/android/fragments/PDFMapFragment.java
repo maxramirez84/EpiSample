@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationProvider;
 import android.net.ConnectivityManager;
@@ -49,7 +48,6 @@ import org.path.episample.android.views.PdfView;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,21 +55,20 @@ import static pdfMapExtractor.ExtractMetaData.ParsePDF;
 
 
 public class PDFMapFragment extends Fragment implements DirectionEventListener,OnNetworkActiveListener, LocationEventListener, LoaderManager.LoaderCallbacks<List<CensusModel>> {
-    public class myObject implements Serializable {
-        myObject(){
-             GpsCords = new ArrayList<Float>();
-
+    public static class myObject {
+        myObject(ArrayList<Float> mGpsCords, Bitmap originalBitmap ){
+            savedGpsCords = new ArrayList<Float>();
+            savedBitmap = originalBitmap;
+            savedGpsCords = mGpsCords;
         }
-        private void setBitmap(Bitmap bm){tempBitmap = bm;}
-        private void setGps(ArrayList<Float> gps){GpsCords = gps;}
-        private Bitmap getBitmap(){return tempBitmap;}
-        private ArrayList<Float> getGps(){return mGpsCoords;}
-        private Bitmap tempBitmap;
-        ArrayList<Float> GpsCords;
+        private ArrayList<Float> getGpsList (){return savedGpsCords;}
+        private Bitmap getBitmap (){return savedBitmap;}
+        private static Bitmap savedBitmap;
+        private static ArrayList<Float> savedGpsCords;
     }
     public static final int ID = R.layout.fragment_pdfmap;
     private TextView mDistanceTextView;
-    ArrayList<Float> mGpsCoords;
+    private volatile ArrayList<Float> mGpsCords;
     private Bundle savedState = null;
     private boolean createdStateInDestroyView;
     private static final String SAVED_BUNDLE_TAG = "saved_bundle";
@@ -94,14 +91,15 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
     private static final int CENSUS_LIST_LOADER = 0x24;
     private NavigateFragment.CensusListAdapter mInstances;
     private SwipeRefreshLayout mRefreshLayout;
-    Bitmap mBit;
+    Bitmap currentBitmap;
+    Bitmap OriginalBitmap;
     NetworkInfo activeNetwork;
     boolean isNetworkConnectionOn;
     boolean isWifiEnabled;
-    private myObject tempObject;
+    private static myObject tempObject;
     boolean isRouteDefined = false;
     boolean isMapReindered = false;
-    boolean isSaved = false;
+    static boolean isSaved = false;
     CensusModel mCurrentSelectedCencus;
     private ConnectivityManager mConnectionManager;
     @Override
@@ -113,7 +111,7 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
         if (mAppName == null || mAppName.length() == 0) {
             mAppName = "PdfMap";
         }
-        mGpsCoords  = new ArrayList<Float>();
+        mGpsCords  = new ArrayList<Float>();
         mConnectionManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         boolean isNetworkConnectionOn = isNetworkConnected();
         boolean isWifiEnabled = isWifiActive();
@@ -125,11 +123,14 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
             mFilterCensusList.add(CensusUtil.FilterCensusList.AdditionalPoint);
             mFilterCensusList.add(CensusUtil.FilterCensusList.AlternatePoint);
         }
-        if (savedInstanceState != null) {
-            tempObject = (myObject) savedState.getSerializable(SAVED_BUNDLE_TAG);
-            isSaved = true;
-            mGpsCoords = tempObject.getGps();
-            mBit = tempObject.getBitmap();
+        if (isSaved && tempObject != null){
+            OriginalBitmap = tempObject.getBitmap();
+            currentBitmap = OriginalBitmap.copy(OriginalBitmap.getConfig(),true);
+            mGpsCords = tempObject.getGpsList();
+        }
+        else{
+            //TODO: Make this a string to convert to any language
+            Toast.makeText(getActivity(), "LOAD PDF FILE", Toast.LENGTH_LONG).show();
         }
 
         WebLogger.getLogger(mAppName).i(t, t + ".onCreate appName=" + mAppName);
@@ -203,17 +204,6 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
                 if (data == null) {
                     return;
                 }
-                if (isSaved) {
-                    updateLocationCompass();
-                    mPdfView.setImageBitmap(mBit);
-                    mPdfView.setGPSBoundsCords(mGpsCoords);
-                    mPdfView.setCensusData(mCensus);
-                    mPdfView.setAdjustViewBounds(true);
-                    mPdfView.setFocusableInTouchMode(true);
-                    mPdfView.setFocusable(true);
-                    mPdfView.invalidate();
-                    isMapReindered = true;
-                } else {
                     Uri uri = data.getData();
                     File extStore = Environment.getExternalStorageDirectory();
                     String uriString = uri.toString();
@@ -242,22 +232,19 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
                     }
 
                     try {
-                        mBit = ParsePDF(filePath, mGpsCoords);
+                        OriginalBitmap = currentBitmap = null;
+                        mGpsCords.clear();
+                        OriginalBitmap = ParsePDF(filePath, mGpsCords);
+                        currentBitmap = OriginalBitmap.copy(OriginalBitmap.getConfig(),true);
+                        tempObject = null;
 
                     } catch (IOException e) {
                         Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
-                    if (mBit != null) {
-                        updateLocationCompass();
-                        mPdfView.setImageBitmap(mBit);
-                        mPdfView.setGPSBoundsCords(mGpsCoords);
-                        mPdfView.setCensusData(mCensus);
-                        mPdfView.setAdjustViewBounds(true);
-                        mPdfView.setFocusableInTouchMode(true);
-                        mPdfView.setFocusable(true);
-                        mPdfView.invalidate();
-                        isMapReindered = true;
+                    if (currentBitmap != null) {
+                        DrawBitmapAndCensusPoints(currentBitmap,mCensus,mGpsCords);
+                        isSaved = true;
                     }
                     else {}
 
@@ -266,7 +253,19 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
             }
         }
 
+    private void DrawBitmapAndCensusPoints(Bitmap bm , List<CensusModel> census , ArrayList<Float> gps) {
+        updateLocationCompass();
+        mPdfView.cleanCanvas();
+        mPdfView.setImageBitmap(bm);
+        mPdfView.setGPSBoundsCords(gps);
+        mPdfView.setCensusData(census);
+        mPdfView.setAdjustViewBounds(true);
+        mPdfView.setFocusableInTouchMode(true);
+        mPdfView.setFocusable(true);
+        mPdfView.invalidate();
+        isMapReindered = true;
     }
+
 
     @Override
     public void onDestroy() {
@@ -274,21 +273,23 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
         if (mCensus != null){mCensus = null;}
         if (mConnectionManager != null){mConnectionManager = null;}
         if (mPdfView != null){mPdfView = null;}
-        if (mBit != null){mBit=null;}
+        if (currentBitmap != null){currentBitmap=null;}
         if (mCurrentSelectedCencus != null) {mCurrentSelectedCencus = null;}
-        mGpsCoords.clear();
-
     }
 
     @Override
     public void onDestroyView() {
         NavigateFragment.mPosition = -1;
-        savedState = saveState();
         mDirectionProvider.stop();
         mDirectionProvider.unregisterSensorsListener();
+        if (OriginalBitmap != null && mGpsCords.size() > 0) {
+            tempObject = new myObject(mGpsCords,OriginalBitmap);
+            isSaved = true;
+        }
         if (mDirectionProvider != null){mDirectionProvider = null;}
         if (mCurrentSelectedCencus != null){mCurrentSelectedCencus.setIsSelected(false);}
         isMapReindered = false;
+        mPdfView.cleanCanvas();
         super.onDestroyView();
 
     }
@@ -299,36 +300,20 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
                 ((ODKActivity) getActivity()).getAppName(), args);
 
     }
-    
-    @Override
-    public void onSaveInstanceState(Bundle state) {
-        super.onSaveInstanceState(state);
-        if (tempObject == null) {
-            state.putBundle(SAVED_BUNDLE_TAG, savedState);
-        } else {
-            state.putBundle(SAVED_BUNDLE_TAG, createdStateInDestroyView ? savedState : saveState());
-        }
-        createdStateInDestroyView = false;
-
-
-
-    }
-    private Bundle saveState() {
-        Bundle state = new Bundle();
-        if (tempObject == null ) {
-            tempObject = new myObject();
-            tempObject.setBitmap(mBit);
-            tempObject.setGps(mGpsCoords);
-            state.putSerializable(SAVED_BUNDLE_TAG, tempObject);
-
-        }
-        return state;
-    }
 
     @Override
     public void onLoadFinished(Loader<List<CensusModel>> loader, List<CensusModel> data) {
         mCensus = data;
-        updateLocationCompass();
+        if (isSaved && tempObject != null) {
+            Bitmap temp = tempObject.getBitmap();
+            currentBitmap = temp.copy(temp.getConfig(),true);
+            if (currentBitmap != null) {
+                DrawBitmapAndCensusPoints(currentBitmap, mCensus, tempObject.getGpsList());
+                tempObject = null;
+            }
+        }
+
+
     }
     private void updateDistance(Location location) {
         if (mDirectionProvider.getDestinationLocation() != null) {
