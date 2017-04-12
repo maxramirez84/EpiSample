@@ -224,7 +224,7 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
                                     return;
                                 }
                                 // Create the total file path
-                                filePath = extStore.toString().concat("/").concat(fileName);
+                                filePath = extStore.toString().concat("/Maps/").concat(fileName);
                             }
                         } finally {
                             cursor.close();
@@ -239,7 +239,7 @@ public class PDFMapFragment extends Fragment implements DirectionEventListener,O
                         tempObject = null;
 
                     } catch (IOException e) {
-                        Toast.makeText(getActivity(), e.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Could not find the file within the \"Maps\" directory.", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                     if (currentBitmap != null) {
