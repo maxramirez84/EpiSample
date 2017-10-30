@@ -1,0 +1,81 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" 
+  xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:jr="http://openrosa.org/javarosa" 
+  xmlns:orx="http://openrosa.org/xforms/" 
+  xmlns:odk="http://www.opendatakit.org/xforms">
+ <h:head>
+  <h:title>ODK 2.0 census</h:title>
+  <model>
+    <instance>
+      <data id="census">
+        <orx:meta>
+          <orx:instanceID/>
+          <orx:timeEnd/>
+          <instanceName/>
+          <rowID/>
+          <rowETag/>
+          <filterType/>
+          <filterValue/>
+          <formID/>
+          <locale/>
+          <savepointType/>
+          <savepointCreator/>
+          <savepointTimestamp/>
+        </orx:meta>
+        <comment/>
+        <createdDate/>
+        <dateLastSelected/>
+        <deviceId/>
+        <deviceName/>
+        <excluded/>
+        <formName/>
+        <headName/>
+        <houseNumber/>
+        <interviewerName/>
+        <location/>
+        <phoneNumber/>
+        <placeName/>
+        <random/>
+        <sampleFrame/>
+        <selected/>
+        <updatedDate/>
+        <valid/>
+      </data> 
+    </instance> 
+    <bind nodeset="/data/meta/instanceID" type="string"/>
+    <bind nodeset="/data/meta/timeEnd" type="dateTime"/>
+    <bind nodeset="/data/meta/instanceName" type="string"/>
+    <bind nodeset="/data/meta/rowID" type="string"/>
+    <bind nodeset="/data/meta/rowETag" type="string"/>
+    <bind nodeset="/data/meta/filterType" type="string"/>
+    <bind nodeset="/data/meta/filterValue" type="string"/>
+    <bind nodeset="/data/meta/formID" type="string"/>
+    <bind nodeset="/data/meta/locale" type="string"/>
+    <bind nodeset="/data/meta/savepointType" type="string"/>
+    <bind nodeset="/data/meta/savepointCreator" type="string"/>
+    <bind nodeset="/data/meta/savepointTimestamp" type="string"/>
+    <bind nodeset="/data/comment" type="string"/>
+    <bind nodeset="/data/createdDate" type="string"/>
+    <bind nodeset="/data/dateLastSelected" type="string"/>
+    <bind nodeset="/data/deviceId" type="string"/>
+    <bind nodeset="/data/deviceName" type="string"/>
+    <bind nodeset="/data/excluded" type="int"/>
+    <bind nodeset="/data/formName" type="string"/>
+    <bind nodeset="/data/headName" type="string"/>
+    <bind nodeset="/data/houseNumber" type="int"/>
+    <bind nodeset="/data/interviewerName" type="string"/>
+    <bind nodeset="/data/location" type="geopoint"/>
+    <bind nodeset="/data/phoneNumber" type="string"/>
+    <bind nodeset="/data/placeName" type="string"/>
+    <bind nodeset="/data/random" type="decimal"/>
+    <bind nodeset="/data/sampleFrame" type="int"/>
+    <bind nodeset="/data/selected" type="int"/>
+    <bind nodeset="/data/updatedDate" type="string"/>
+    <bind nodeset="/data/valid" type="int"/>
+  </model> 
+ </h:head> 
+ <h:body> 
+ </h:body> 
+</h:html>
