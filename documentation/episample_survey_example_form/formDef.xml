@@ -1,0 +1,71 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" 
+  xmlns:h="http://www.w3.org/1999/xhtml" 
+  xmlns:ev="http://www.w3.org/2001/xml-events" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:jr="http://openrosa.org/javarosa" 
+  xmlns:orx="http://openrosa.org/xforms/" 
+  xmlns:odk="http://www.opendatakit.org/xforms">
+ <h:head>
+  <h:title>ODK 2.0 episample_survey_example</h:title>
+  <model>
+    <instance>
+      <data id="episample_survey_example">
+        <orx:meta>
+          <orx:instanceID/>
+          <orx:timeEnd/>
+          <instanceName/>
+          <rowID/>
+          <rowETag/>
+          <filterType/>
+          <filterValue/>
+          <formID/>
+          <locale/>
+          <savepointType/>
+          <savepointCreator/>
+          <savepointTimestamp/>
+        </orx:meta>
+        <assets/>
+        <consent/>
+        <dob/>
+        <hh_acceptance/>
+        <marital_status/>
+        <other_roof/>
+        <other_why_not_consent/>
+        <pregnant_last_12_months/>
+        <read/>
+        <resident_during_pregnancy/>
+        <roof/>
+        <visit/>
+        <why_not_consent/>
+      </data> 
+    </instance> 
+    <bind nodeset="/data/meta/instanceID" type="string"/>
+    <bind nodeset="/data/meta/timeEnd" type="dateTime"/>
+    <bind nodeset="/data/meta/instanceName" type="string"/>
+    <bind nodeset="/data/meta/rowID" type="string"/>
+    <bind nodeset="/data/meta/rowETag" type="string"/>
+    <bind nodeset="/data/meta/filterType" type="string"/>
+    <bind nodeset="/data/meta/filterValue" type="string"/>
+    <bind nodeset="/data/meta/formID" type="string"/>
+    <bind nodeset="/data/meta/locale" type="string"/>
+    <bind nodeset="/data/meta/savepointType" type="string"/>
+    <bind nodeset="/data/meta/savepointCreator" type="string"/>
+    <bind nodeset="/data/meta/savepointTimestamp" type="string"/>
+    <bind nodeset="/data/assets" type="select"/>
+    <bind nodeset="/data/consent" type="string"/>
+    <bind nodeset="/data/dob" type="date"/>
+    <bind nodeset="/data/hh_acceptance" type="string"/>
+    <bind nodeset="/data/marital_status" type="string"/>
+    <bind nodeset="/data/other_roof" type="string"/>
+    <bind nodeset="/data/other_why_not_consent" type="string"/>
+    <bind nodeset="/data/pregnant_last_12_months" type="string"/>
+    <bind nodeset="/data/read" type="string"/>
+    <bind nodeset="/data/resident_during_pregnancy" type="string"/>
+    <bind nodeset="/data/roof" type="string"/>
+    <bind nodeset="/data/visit" type="string"/>
+    <bind nodeset="/data/why_not_consent" type="string"/>
+  </model> 
+ </h:head> 
+ <h:body> 
+ </h:body> 
+</h:html>
