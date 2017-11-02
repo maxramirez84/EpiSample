@@ -1,0 +1,1805 @@
+{
+  "xlsx": {
+    "survey": [
+      {
+        "clause": "do section eligibility",
+        "_row_num": 2
+      },
+      {
+        "clause": "if",
+        "condition": "calculates.elegible()",
+        "_row_num": 3
+      },
+      {
+        "clause": "do section household",
+        "_row_num": 4
+      },
+      {
+        "clause": "end if",
+        "_row_num": 5
+      },
+      {
+        "clause": "if",
+        "condition": "calculates.elegible()",
+        "_row_num": 6
+      },
+      {
+        "clause": "do section participant",
+        "_row_num": 7
+      },
+      {
+        "clause": "end if",
+        "_row_num": 8
+      }
+    ],
+    "choices": [
+      {
+        "choice_list_name": "yesno",
+        "data_value": "no",
+        "display": {
+          "text": "No"
+        },
+        "_row_num": 2
+      },
+      {
+        "choice_list_name": "yesno",
+        "data_value": "yes",
+        "display": {
+          "text": "Yes"
+        },
+        "_row_num": 3
+      },
+      {
+        "choice_list_name": "acceptance",
+        "data_value": "no",
+        "display": {
+          "text": "No"
+        },
+        "_row_num": 4
+      },
+      {
+        "choice_list_name": "acceptance",
+        "data_value": "yes",
+        "display": {
+          "text": "Yes"
+        },
+        "_row_num": 5
+      },
+      {
+        "choice_list_name": "acceptance",
+        "data_value": "not_found",
+        "display": {
+          "text": "Not Found"
+        },
+        "_row_num": 6
+      },
+      {
+        "choice_list_name": "whynotconsent",
+        "data_value": "refusal",
+        "display": {
+          "text": "Refusal"
+        },
+        "_row_num": 7
+      },
+      {
+        "choice_list_name": "whynotconsent",
+        "data_value": "head_not_present",
+        "display": {
+          "text": "Refusal because the household head is not present"
+        },
+        "_row_num": 8
+      },
+      {
+        "choice_list_name": "whynotconsent",
+        "data_value": "participant_not_present",
+        "display": {
+          "text": "Participant not present"
+        },
+        "_row_num": 9
+      },
+      {
+        "choice_list_name": "whynotconsent",
+        "data_value": "other",
+        "display": {
+          "text": "Other reason"
+        },
+        "_row_num": 10
+      },
+      {
+        "choice_list_name": "visits",
+        "data_value": "first",
+        "display": {
+          "text": "First visit"
+        },
+        "_row_num": 11
+      },
+      {
+        "choice_list_name": "visits",
+        "data_value": "second",
+        "display": {
+          "text": "Second visit"
+        },
+        "_row_num": 12
+      },
+      {
+        "choice_list_name": "roofmaterials",
+        "data_value": "metal_sheet",
+        "display": {
+          "text": "Metal sheet"
+        },
+        "_row_num": 13
+      },
+      {
+        "choice_list_name": "roofmaterials",
+        "data_value": "grass",
+        "display": {
+          "text": "Grass"
+        },
+        "_row_num": 14
+      },
+      {
+        "choice_list_name": "roofmaterials",
+        "data_value": "reeds",
+        "display": {
+          "text": "Reeds"
+        },
+        "_row_num": 15
+      },
+      {
+        "choice_list_name": "roofmaterials",
+        "data_value": "other",
+        "display": {
+          "text": "Other roof"
+        },
+        "_row_num": 16
+      },
+      {
+        "choice_list_name": "assets",
+        "data_value": "electricity",
+        "display": {
+          "text": "Electricity"
+        },
+        "_row_num": 17
+      },
+      {
+        "choice_list_name": "assets",
+        "data_value": "cell_phone",
+        "display": {
+          "text": "Cell phone"
+        },
+        "_row_num": 18
+      },
+      {
+        "choice_list_name": "assets",
+        "data_value": "tv",
+        "display": {
+          "text": "TV"
+        },
+        "_row_num": 19
+      },
+      {
+        "choice_list_name": "assets",
+        "data_value": "bicycle",
+        "display": {
+          "text": "Bicycle"
+        },
+        "_row_num": 20
+      },
+      {
+        "choice_list_name": "assets",
+        "data_value": "computer",
+        "display": {
+          "text": "Computer"
+        },
+        "_row_num": 21
+      },
+      {
+        "choice_list_name": "assets",
+        "data_value": "fridge",
+        "display": {
+          "text": "Fridge"
+        },
+        "_row_num": 22
+      },
+      {
+        "choice_list_name": "maritalstatus",
+        "data_value": "single",
+        "display": {
+          "text": "Single"
+        },
+        "_row_num": 23
+      },
+      {
+        "choice_list_name": "maritalstatus",
+        "data_value": "married",
+        "display": {
+          "text": "Married"
+        },
+        "_row_num": 24
+      },
+      {
+        "choice_list_name": "maritalstatus",
+        "data_value": "union",
+        "display": {
+          "text": "Union"
+        },
+        "_row_num": 25
+      },
+      {
+        "choice_list_name": "maritalstatus",
+        "data_value": "separated",
+        "display": {
+          "text": "Separated"
+        },
+        "_row_num": 26
+      },
+      {
+        "choice_list_name": "maritalstatus",
+        "data_value": "widow",
+        "display": {
+          "text": "Widow"
+        },
+        "_row_num": 27
+      }
+    ],
+    "eligibility": [
+      {
+        "type": "select_one",
+        "values_list": "acceptance",
+        "name": "hh_acceptance",
+        "display": {
+          "text": "Household head acceptance"
+        },
+        "required": 1,
+        "_row_num": 2
+      },
+      {
+        "type": "select_one",
+        "values_list": "yesno",
+        "name": "pregnant_last_12_months",
+        "display": {
+          "text": "Is there any woman that has had a pregnancy that ended during the last 12 months?"
+        },
+        "required": 1,
+        "_row_num": 3
+      },
+      {
+        "type": "select_one",
+        "values_list": "yesno",
+        "name": "resident_during_pregnancy",
+        "display": {
+          "text": "Was the woman residing in the study area for at least 6 months during the pregnancy and at the time of the HHS?"
+        },
+        "required": 1,
+        "_row_num": 4
+      },
+      {
+        "type": "select_one",
+        "values_list": "yesno",
+        "name": "consent",
+        "display": {
+          "text": "Has informed consent been signed?"
+        },
+        "required": 1,
+        "_row_num": 5
+      },
+      {
+        "clause": "if // not_consent",
+        "condition": "selected(data('consent'), 'no')",
+        "_row_num": 6
+      },
+      {
+        "type": "select_one",
+        "values_list": "whynotconsent",
+        "name": "why_not_consent",
+        "display": {
+          "text": "If consent has not been signed, why?"
+        },
+        "_row_num": 7
+      },
+      {
+        "clause": "if",
+        "condition": "selected(data('why_not_consent'), 'other')",
+        "_row_num": 8
+      },
+      {
+        "type": "text",
+        "name": "other_why_not_consent",
+        "display": {
+          "text": "Specify other reason why consent has not been signed:"
+        },
+        "_row_num": 9
+      },
+      {
+        "clause": "end if",
+        "_row_num": 10
+      },
+      {
+        "clause": "if",
+        "condition": "selected(data('why_not_consent'), 'participant_not_present')",
+        "_row_num": 11
+      },
+      {
+        "type": "select_one",
+        "values_list": "visits",
+        "name": "visit",
+        "display": {
+          "text": "If participant not present, visit number:"
+        },
+        "_row_num": 12
+      },
+      {
+        "clause": "end if",
+        "_row_num": 13
+      },
+      {
+        "clause": "end if // not_consent",
+        "_row_num": 14
+      }
+    ],
+    "household": [
+      {
+        "type": "select_one",
+        "values_list": "roofmaterials",
+        "name": "roof",
+        "display": {
+          "text": "Roof of the main construction"
+        },
+        "_row_num": 2
+      },
+      {
+        "clause": "if",
+        "condition": "selected(data('roof'), 'other')",
+        "_row_num": 3
+      },
+      {
+        "type": "text",
+        "name": "other_roof",
+        "display": {
+          "text": "Specify other roof:"
+        },
+        "_row_num": 4
+      },
+      {
+        "clause": "end if",
+        "_row_num": 5
+      },
+      {
+        "type": "select_multiple",
+        "values_list": "assets",
+        "name": "assets",
+        "display": {
+          "text": "The household has:",
+          "hint": "multiple choice"
+        },
+        "comments": "comentarios",
+        "_row_num": 6
+      }
+    ],
+    "participant": [
+      {
+        "type": "date",
+        "name": "dob",
+        "display": {
+          "text": "Date of birth",
+          "hint": "If they do not recall, use a historical calendar"
+        },
+        "_row_num": 2
+      },
+      {
+        "type": "select_one",
+        "values_list": "yesno",
+        "name": "read",
+        "display": {
+          "text": "Can the participant read?"
+        },
+        "_row_num": 3
+      },
+      {
+        "type": "select_one",
+        "values_list": "maritalstatus",
+        "name": "marital_status",
+        "display": {
+          "text": "Participant’s marital status"
+        },
+        "_row_num": 4
+      }
+    ],
+    "calculates": [
+      {
+        "calculation_name": "elegible",
+        "calculation": "(selected(data('hh_acceptance'), 'yes') || selected(data('hh_acceptance'), 'not_found')) && selected(data('pregnant_last_12_months'), 'yes') && selected(data('resident_during_pregnancy'), 'yes')  && selected(data('consent'), 'yes')",
+        "_row_num": 2
+      }
+    ],
+    "settings": [
+      {
+        "setting_name": "form_id",
+        "value": "episample_survey_example",
+        "_row_num": 2
+      },
+      {
+        "setting_name": "form_version",
+        "value": 20171031,
+        "_row_num": 3
+      },
+      {
+        "setting_name": "table_id",
+        "value": "episample_survey_example",
+        "_row_num": 4
+      },
+      {
+        "setting_name": "survey",
+        "display": {
+          "title": "EpiSample Survey Example"
+        },
+        "_row_num": 5
+      },
+      {
+        "setting_name": "eligibility",
+        "display": {
+          "title": "Inclusion Criteria Check"
+        },
+        "_row_num": 6
+      },
+      {
+        "setting_name": "household",
+        "display": {
+          "title": "Household Information"
+        },
+        "_row_num": 7
+      },
+      {
+        "setting_name": "participant",
+        "display": {
+          "title": "Participant Information"
+        },
+        "_row_num": 8
+      }
+    ]
+  },
+  "specification": {
+    "column_types": {
+      "_screen_block": "function",
+      "condition": "formula",
+      "constraint": "formula",
+      "required": "formula",
+      "calculation": "formula",
+      "auxillaryHash": "formula",
+      "selectionArgs": "formula",
+      "url": "formula",
+      "uri": "formula",
+      "callback": "formula(context)",
+      "choice_filter": "formula(choice_item)",
+      "templatePath": "requirejs_path",
+      "image": "app_path_localized",
+      "audio": "app_path_localized",
+      "video": "app_path_localized"
+    },
+    "settings": {
+      "form_id": {
+        "setting_name": "form_id",
+        "value": "episample_survey_example",
+        "_row_num": 2
+      },
+      "form_version": {
+        "setting_name": "form_version",
+        "value": 20171031,
+        "_row_num": 3
+      },
+      "table_id": {
+        "setting_name": "table_id",
+        "value": "episample_survey_example",
+        "_row_num": 4
+      },
+      "survey": {
+        "setting_name": "survey",
+        "display": {
+          "title": "EpiSample Survey Example"
+        },
+        "_row_num": 5
+      },
+      "eligibility": {
+        "setting_name": "eligibility",
+        "display": {
+          "title": "Inclusion Criteria Check"
+        },
+        "_row_num": 6
+      },
+      "household": {
+        "setting_name": "household",
+        "display": {
+          "title": "Household Information"
+        },
+        "_row_num": 7
+      },
+      "participant": {
+        "setting_name": "participant",
+        "display": {
+          "title": "Participant Information"
+        },
+        "_row_num": 8
+      },
+      "_locales": {
+        "setting_name": "_locales",
+        "_row_num": 5,
+        "value": [
+          {
+            "display": {
+              "text": "default"
+            },
+            "name": "default"
+          }
+        ]
+      },
+      "_default_locale": {
+        "setting_name": "_default_locale",
+        "_row_num": 5,
+        "value": "default"
+      },
+      "initial": {
+        "setting_name": "survey",
+        "display": {
+          "title": "EpiSample Survey Example"
+        },
+        "_row_num": 5
+      }
+    },
+    "choices": {
+      "yesno": [
+        {
+          "choice_list_name": "yesno",
+          "data_value": "no",
+          "display": {
+            "text": "No"
+          },
+          "_row_num": 2
+        },
+        {
+          "choice_list_name": "yesno",
+          "data_value": "yes",
+          "display": {
+            "text": "Yes"
+          },
+          "_row_num": 3
+        }
+      ],
+      "acceptance": [
+        {
+          "choice_list_name": "acceptance",
+          "data_value": "no",
+          "display": {
+            "text": "No"
+          },
+          "_row_num": 4
+        },
+        {
+          "choice_list_name": "acceptance",
+          "data_value": "yes",
+          "display": {
+            "text": "Yes"
+          },
+          "_row_num": 5
+        },
+        {
+          "choice_list_name": "acceptance",
+          "data_value": "not_found",
+          "display": {
+            "text": "Not Found"
+          },
+          "_row_num": 6
+        }
+      ],
+      "whynotconsent": [
+        {
+          "choice_list_name": "whynotconsent",
+          "data_value": "refusal",
+          "display": {
+            "text": "Refusal"
+          },
+          "_row_num": 7
+        },
+        {
+          "choice_list_name": "whynotconsent",
+          "data_value": "head_not_present",
+          "display": {
+            "text": "Refusal because the household head is not present"
+          },
+          "_row_num": 8
+        },
+        {
+          "choice_list_name": "whynotconsent",
+          "data_value": "participant_not_present",
+          "display": {
+            "text": "Participant not present"
+          },
+          "_row_num": 9
+        },
+        {
+          "choice_list_name": "whynotconsent",
+          "data_value": "other",
+          "display": {
+            "text": "Other reason"
+          },
+          "_row_num": 10
+        }
+      ],
+      "visits": [
+        {
+          "choice_list_name": "visits",
+          "data_value": "first",
+          "display": {
+            "text": "First visit"
+          },
+          "_row_num": 11
+        },
+        {
+          "choice_list_name": "visits",
+          "data_value": "second",
+          "display": {
+            "text": "Second visit"
+          },
+          "_row_num": 12
+        }
+      ],
+      "roofmaterials": [
+        {
+          "choice_list_name": "roofmaterials",
+          "data_value": "metal_sheet",
+          "display": {
+            "text": "Metal sheet"
+          },
+          "_row_num": 13
+        },
+        {
+          "choice_list_name": "roofmaterials",
+          "data_value": "grass",
+          "display": {
+            "text": "Grass"
+          },
+          "_row_num": 14
+        },
+        {
+          "choice_list_name": "roofmaterials",
+          "data_value": "reeds",
+          "display": {
+            "text": "Reeds"
+          },
+          "_row_num": 15
+        },
+        {
+          "choice_list_name": "roofmaterials",
+          "data_value": "other",
+          "display": {
+            "text": "Other roof"
+          },
+          "_row_num": 16
+        }
+      ],
+      "assets": [
+        {
+          "choice_list_name": "assets",
+          "data_value": "electricity",
+          "display": {
+            "text": "Electricity"
+          },
+          "_row_num": 17
+        },
+        {
+          "choice_list_name": "assets",
+          "data_value": "cell_phone",
+          "display": {
+            "text": "Cell phone"
+          },
+          "_row_num": 18
+        },
+        {
+          "choice_list_name": "assets",
+          "data_value": "tv",
+          "display": {
+            "text": "TV"
+          },
+          "_row_num": 19
+        },
+        {
+          "choice_list_name": "assets",
+          "data_value": "bicycle",
+          "display": {
+            "text": "Bicycle"
+          },
+          "_row_num": 20
+        },
+        {
+          "choice_list_name": "assets",
+          "data_value": "computer",
+          "display": {
+            "text": "Computer"
+          },
+          "_row_num": 21
+        },
+        {
+          "choice_list_name": "assets",
+          "data_value": "fridge",
+          "display": {
+            "text": "Fridge"
+          },
+          "_row_num": 22
+        }
+      ],
+      "maritalstatus": [
+        {
+          "choice_list_name": "maritalstatus",
+          "data_value": "single",
+          "display": {
+            "text": "Single"
+          },
+          "_row_num": 23
+        },
+        {
+          "choice_list_name": "maritalstatus",
+          "data_value": "married",
+          "display": {
+            "text": "Married"
+          },
+          "_row_num": 24
+        },
+        {
+          "choice_list_name": "maritalstatus",
+          "data_value": "union",
+          "display": {
+            "text": "Union"
+          },
+          "_row_num": 25
+        },
+        {
+          "choice_list_name": "maritalstatus",
+          "data_value": "separated",
+          "display": {
+            "text": "Separated"
+          },
+          "_row_num": 26
+        },
+        {
+          "choice_list_name": "maritalstatus",
+          "data_value": "widow",
+          "display": {
+            "text": "Widow"
+          },
+          "_row_num": 27
+        }
+      ]
+    },
+    "queries": {},
+    "calculates": {
+      "elegible": {
+        "calculation_name": "elegible",
+        "calculation": "(selected(data('hh_acceptance'), 'yes') || selected(data('hh_acceptance'), 'not_found')) && selected(data('pregnant_last_12_months'), 'yes') && selected(data('resident_during_pregnancy'), 'yes')  && selected(data('consent'), 'yes')",
+        "_row_num": 2
+      }
+    },
+    "model": {
+      "hh_acceptance": {
+        "_defn": [
+          {
+            "_row_num": 2,
+            "section_name": "eligibility"
+          }
+        ],
+        "type": "string",
+        "valuesList": "acceptance",
+        "elementKey": "hh_acceptance"
+      },
+      "pregnant_last_12_months": {
+        "_defn": [
+          {
+            "_row_num": 3,
+            "section_name": "eligibility"
+          }
+        ],
+        "type": "string",
+        "valuesList": "yesno",
+        "elementKey": "pregnant_last_12_months"
+      },
+      "resident_during_pregnancy": {
+        "_defn": [
+          {
+            "_row_num": 4,
+            "section_name": "eligibility"
+          }
+        ],
+        "type": "string",
+        "valuesList": "yesno",
+        "elementKey": "resident_during_pregnancy"
+      },
+      "consent": {
+        "_defn": [
+          {
+            "_row_num": 5,
+            "section_name": "eligibility"
+          }
+        ],
+        "type": "string",
+        "valuesList": "yesno",
+        "elementKey": "consent"
+      },
+      "why_not_consent": {
+        "_defn": [
+          {
+            "_row_num": 7,
+            "section_name": "eligibility"
+          }
+        ],
+        "type": "string",
+        "valuesList": "whynotconsent",
+        "elementKey": "why_not_consent"
+      },
+      "other_why_not_consent": {
+        "_defn": [
+          {
+            "_row_num": 9,
+            "section_name": "eligibility"
+          }
+        ],
+        "type": "string",
+        "elementKey": "other_why_not_consent"
+      },
+      "visit": {
+        "_defn": [
+          {
+            "_row_num": 12,
+            "section_name": "eligibility"
+          }
+        ],
+        "type": "string",
+        "valuesList": "visits",
+        "elementKey": "visit"
+      },
+      "roof": {
+        "_defn": [
+          {
+            "_row_num": 2,
+            "section_name": "household"
+          }
+        ],
+        "type": "string",
+        "valuesList": "roofmaterials",
+        "elementKey": "roof"
+      },
+      "other_roof": {
+        "_defn": [
+          {
+            "_row_num": 4,
+            "section_name": "household"
+          }
+        ],
+        "type": "string",
+        "elementKey": "other_roof"
+      },
+      "assets": {
+        "_defn": [
+          {
+            "_row_num": 6,
+            "section_name": "household"
+          }
+        ],
+        "type": "array",
+        "items": {
+          "type": "string",
+          "elementKey": "assets_items"
+        },
+        "valuesList": "assets",
+        "elementKey": "assets"
+      },
+      "dob": {
+        "_defn": [
+          {
+            "_row_num": 2,
+            "section_name": "participant"
+          }
+        ],
+        "type": "object",
+        "elementType": "date",
+        "elementKey": "dob"
+      },
+      "read": {
+        "_defn": [
+          {
+            "_row_num": 3,
+            "section_name": "participant"
+          }
+        ],
+        "type": "string",
+        "valuesList": "yesno",
+        "elementKey": "read"
+      },
+      "marital_status": {
+        "_defn": [
+          {
+            "_row_num": 4,
+            "section_name": "participant"
+          }
+        ],
+        "type": "string",
+        "valuesList": "maritalstatus",
+        "elementKey": "marital_status"
+      }
+    },
+    "section_names": [
+      "eligibility",
+      "household",
+      "initial",
+      "participant",
+      "survey"
+    ],
+    "sections": {
+      "survey": {
+        "section_name": "survey",
+        "nested_sections": {
+          "eligibility": true,
+          "household": true,
+          "participant": true
+        },
+        "reachable_sections": {
+          "eligibility": true,
+          "household": true,
+          "participant": true
+        },
+        "prompts": [
+          {
+            "clause": "do section eligibility",
+            "_row_num": 2,
+            "__rowNum__": 1,
+            "_token_type": "prompt",
+            "_do_section_name": "eligibility",
+            "_type": "_section",
+            "promptIdx": 0,
+            "display": {
+              "title": "Inclusion Criteria Check"
+            },
+            "_branch_label_enclosing_screen": "eligibility/0"
+          },
+          {
+            "clause": "do section household",
+            "_row_num": 4,
+            "__rowNum__": 3,
+            "_token_type": "prompt",
+            "_do_section_name": "household",
+            "_type": "_section",
+            "promptIdx": 1,
+            "display": {
+              "title": "Household Information"
+            },
+            "_branch_label_enclosing_screen": "household/0"
+          },
+          {
+            "clause": "do section participant",
+            "_row_num": 7,
+            "__rowNum__": 6,
+            "_token_type": "prompt",
+            "_do_section_name": "participant",
+            "_type": "_section",
+            "promptIdx": 2,
+            "display": {
+              "title": "Participant Information"
+            },
+            "_branch_label_enclosing_screen": "participant/0"
+          },
+          {
+            "_token_type": "prompt",
+            "type": "contents",
+            "_type": "contents",
+            "_row_num": 9,
+            "_branch_label_enclosing_screen": "survey/_screen9",
+            "promptIdx": 3
+          }
+        ],
+        "validation_tag_map": {
+          "finalize": []
+        },
+        "operations": [
+          {
+            "clause": "do section eligibility",
+            "_row_num": 2,
+            "__rowNum__": 1,
+            "_token_type": "do_section",
+            "_do_section_name": "eligibility",
+            "operationIdx": 0
+          },
+          {
+            "clause": "if",
+            "condition": "calculates.elegible()",
+            "_row_num": 3,
+            "__rowNum__": 2,
+            "_token_type": "goto_label",
+            "_branch_label": "_then3",
+            "operationIdx": 1
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else5",
+            "_row_num": 5,
+            "operationIdx": 2
+          },
+          {
+            "clause": "do section household",
+            "_row_num": 4,
+            "__rowNum__": 3,
+            "_token_type": "do_section",
+            "_do_section_name": "household",
+            "operationIdx": 3
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif5",
+            "_row_num": 5,
+            "operationIdx": 4
+          },
+          {
+            "clause": "if",
+            "condition": "calculates.elegible()",
+            "_row_num": 6,
+            "__rowNum__": 5,
+            "_token_type": "goto_label",
+            "_branch_label": "_then6",
+            "operationIdx": 5
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else8",
+            "_row_num": 8,
+            "operationIdx": 6
+          },
+          {
+            "clause": "do section participant",
+            "_row_num": 7,
+            "__rowNum__": 6,
+            "_token_type": "do_section",
+            "_do_section_name": "participant",
+            "operationIdx": 7
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif8",
+            "_row_num": 8,
+            "operationIdx": 8
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 9,
+            "operationIdx": 9
+          },
+          {
+            "_row_num": 9,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
+            "screen": {
+              "hideInBackHistory": true
+            },
+            "operationIdx": 10
+          },
+          {
+            "_token_type": "resume",
+            "clause": "resume",
+            "_row_num": 9,
+            "operationIdx": 11
+          }
+        ],
+        "branch_label_map": {
+          "_then3": 3,
+          "_else5": 5,
+          "_endif5": 5,
+          "_then6": 7,
+          "_else8": 9,
+          "_endif8": 9,
+          "_contents": 10,
+          "_screen9": 10
+        }
+      },
+      "eligibility": {
+        "section_name": "eligibility",
+        "nested_sections": {},
+        "reachable_sections": {},
+        "prompts": [
+          {
+            "type": "select_one",
+            "values_list": "acceptance",
+            "name": "hh_acceptance",
+            "display": {
+              "text": "Household head acceptance"
+            },
+            "required": 1,
+            "_row_num": 2,
+            "__rowNum__": 1,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "eligibility/_screen2",
+            "promptIdx": 0
+          },
+          {
+            "type": "select_one",
+            "values_list": "yesno",
+            "name": "pregnant_last_12_months",
+            "display": {
+              "text": "Is there any woman that has had a pregnancy that ended during the last 12 months?"
+            },
+            "required": 1,
+            "_row_num": 3,
+            "__rowNum__": 2,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "eligibility/_screen3",
+            "promptIdx": 1
+          },
+          {
+            "type": "select_one",
+            "values_list": "yesno",
+            "name": "resident_during_pregnancy",
+            "display": {
+              "text": "Was the woman residing in the study area for at least 6 months during the pregnancy and at the time of the HHS?"
+            },
+            "required": 1,
+            "_row_num": 4,
+            "__rowNum__": 3,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "eligibility/_screen4",
+            "promptIdx": 2
+          },
+          {
+            "type": "select_one",
+            "values_list": "yesno",
+            "name": "consent",
+            "display": {
+              "text": "Has informed consent been signed?"
+            },
+            "required": 1,
+            "_row_num": 5,
+            "__rowNum__": 4,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "eligibility/_screen5",
+            "promptIdx": 3
+          },
+          {
+            "type": "select_one",
+            "values_list": "whynotconsent",
+            "name": "why_not_consent",
+            "display": {
+              "text": "If consent has not been signed, why?"
+            },
+            "_row_num": 7,
+            "__rowNum__": 6,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "eligibility/_screen7",
+            "promptIdx": 4
+          },
+          {
+            "type": "text",
+            "name": "other_why_not_consent",
+            "display": {
+              "text": "Specify other reason why consent has not been signed:"
+            },
+            "_row_num": 9,
+            "__rowNum__": 8,
+            "_token_type": "prompt",
+            "_type": "text",
+            "_branch_label_enclosing_screen": "eligibility/_screen9",
+            "promptIdx": 5
+          },
+          {
+            "type": "select_one",
+            "values_list": "visits",
+            "name": "visit",
+            "display": {
+              "text": "If participant not present, visit number:"
+            },
+            "_row_num": 12,
+            "__rowNum__": 11,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "eligibility/_screen12",
+            "promptIdx": 6
+          },
+          {
+            "_token_type": "prompt",
+            "type": "contents",
+            "_type": "contents",
+            "_row_num": 15,
+            "_branch_label_enclosing_screen": "eligibility/_screen15",
+            "promptIdx": 7
+          }
+        ],
+        "validation_tag_map": {
+          "finalize": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        "operations": [
+          {
+            "_row_num": 2,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 0
+          },
+          {
+            "_row_num": 3,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(1);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 1
+          },
+          {
+            "_row_num": 4,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(2);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 2
+          },
+          {
+            "_row_num": 5,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 3
+          },
+          {
+            "clause": "if // not_consent",
+            "condition": "selected(data('consent'), 'no')",
+            "_row_num": 6,
+            "__rowNum__": 5,
+            "_token_type": "goto_label",
+            "_tag_name": "not_consent",
+            "_branch_label": "_then6",
+            "operationIdx": 4
+          },
+          {
+            "clause": "end if // not_consent",
+            "_token_type": "goto_label",
+            "_branch_label": "_else14",
+            "_row_num": 14,
+            "operationIdx": 5
+          },
+          {
+            "_row_num": 7,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(4);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 6
+          },
+          {
+            "clause": "if",
+            "condition": "selected(data('why_not_consent'), 'other')",
+            "_row_num": 8,
+            "__rowNum__": 7,
+            "_token_type": "goto_label",
+            "_branch_label": "_then8",
+            "operationIdx": 7
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else10",
+            "_row_num": 10,
+            "operationIdx": 8
+          },
+          {
+            "_row_num": 9,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(5);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 9
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif10",
+            "_row_num": 10,
+            "operationIdx": 10
+          },
+          {
+            "clause": "if",
+            "condition": "selected(data('why_not_consent'), 'participant_not_present')",
+            "_row_num": 11,
+            "__rowNum__": 10,
+            "_token_type": "goto_label",
+            "_branch_label": "_then11",
+            "operationIdx": 11
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else13",
+            "_row_num": 13,
+            "operationIdx": 12
+          },
+          {
+            "_row_num": 12,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(6);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 13
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif13",
+            "_row_num": 13,
+            "operationIdx": 14
+          },
+          {
+            "clause": "end if // not_consent",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif14",
+            "_row_num": 14,
+            "operationIdx": 15
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 15,
+            "operationIdx": 16
+          },
+          {
+            "_row_num": 15,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(7);\n\nreturn activePromptIndicies;\n}\n",
+            "screen": {
+              "hideInBackHistory": true
+            },
+            "operationIdx": 17
+          },
+          {
+            "_token_type": "resume",
+            "clause": "resume",
+            "_row_num": 15,
+            "operationIdx": 18
+          }
+        ],
+        "branch_label_map": {
+          "_screen2": 0,
+          "_screen3": 1,
+          "_screen4": 2,
+          "_screen5": 3,
+          "_then6": 6,
+          "_screen7": 6,
+          "_then8": 9,
+          "_screen9": 9,
+          "_else10": 11,
+          "_endif10": 11,
+          "_then11": 13,
+          "_screen12": 13,
+          "_else13": 15,
+          "_endif13": 15,
+          "_else14": 16,
+          "_endif14": 16,
+          "_contents": 17,
+          "_screen15": 17
+        }
+      },
+      "household": {
+        "section_name": "household",
+        "nested_sections": {},
+        "reachable_sections": {},
+        "prompts": [
+          {
+            "type": "select_one",
+            "values_list": "roofmaterials",
+            "name": "roof",
+            "display": {
+              "text": "Roof of the main construction"
+            },
+            "_row_num": 2,
+            "__rowNum__": 1,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "household/_screen2",
+            "promptIdx": 0
+          },
+          {
+            "type": "text",
+            "name": "other_roof",
+            "display": {
+              "text": "Specify other roof:"
+            },
+            "_row_num": 4,
+            "__rowNum__": 3,
+            "_token_type": "prompt",
+            "_type": "text",
+            "_branch_label_enclosing_screen": "household/_screen4",
+            "promptIdx": 1
+          },
+          {
+            "type": "select_multiple",
+            "values_list": "assets",
+            "name": "assets",
+            "display": {
+              "text": "The household has:",
+              "hint": "multiple choice"
+            },
+            "comments": "comentarios",
+            "_row_num": 6,
+            "__rowNum__": 5,
+            "_token_type": "prompt",
+            "_type": "select_multiple",
+            "_branch_label_enclosing_screen": "household/_screen6",
+            "promptIdx": 2
+          },
+          {
+            "_token_type": "prompt",
+            "type": "contents",
+            "_type": "contents",
+            "_row_num": 7,
+            "_branch_label_enclosing_screen": "household/_screen7",
+            "promptIdx": 3
+          }
+        ],
+        "validation_tag_map": {
+          "finalize": []
+        },
+        "operations": [
+          {
+            "_row_num": 2,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 0
+          },
+          {
+            "clause": "if",
+            "condition": "selected(data('roof'), 'other')",
+            "_row_num": 3,
+            "__rowNum__": 2,
+            "_token_type": "goto_label",
+            "_branch_label": "_then3",
+            "operationIdx": 1
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_else5",
+            "_row_num": 5,
+            "operationIdx": 2
+          },
+          {
+            "_row_num": 4,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(1);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 3
+          },
+          {
+            "clause": "end if",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif5",
+            "_row_num": 5,
+            "operationIdx": 4
+          },
+          {
+            "_row_num": 6,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(2);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 5
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 7,
+            "operationIdx": 6
+          },
+          {
+            "_row_num": 7,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
+            "screen": {
+              "hideInBackHistory": true
+            },
+            "operationIdx": 7
+          },
+          {
+            "_token_type": "resume",
+            "clause": "resume",
+            "_row_num": 7,
+            "operationIdx": 8
+          }
+        ],
+        "branch_label_map": {
+          "_screen2": 0,
+          "_then3": 3,
+          "_screen4": 3,
+          "_else5": 5,
+          "_endif5": 5,
+          "_screen6": 5,
+          "_contents": 7,
+          "_screen7": 7
+        }
+      },
+      "participant": {
+        "section_name": "participant",
+        "nested_sections": {},
+        "reachable_sections": {},
+        "prompts": [
+          {
+            "type": "date",
+            "name": "dob",
+            "display": {
+              "text": "Date of birth",
+              "hint": "If they do not recall, use a historical calendar"
+            },
+            "_row_num": 2,
+            "__rowNum__": 1,
+            "_token_type": "prompt",
+            "_type": "date",
+            "_branch_label_enclosing_screen": "participant/_screen2",
+            "promptIdx": 0
+          },
+          {
+            "type": "select_one",
+            "values_list": "yesno",
+            "name": "read",
+            "display": {
+              "text": "Can the participant read?"
+            },
+            "_row_num": 3,
+            "__rowNum__": 2,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "participant/_screen3",
+            "promptIdx": 1
+          },
+          {
+            "type": "select_one",
+            "values_list": "maritalstatus",
+            "name": "marital_status",
+            "display": {
+              "text": "Participant’s marital status"
+            },
+            "_row_num": 4,
+            "__rowNum__": 3,
+            "_token_type": "prompt",
+            "_type": "select_one",
+            "_branch_label_enclosing_screen": "participant/_screen4",
+            "promptIdx": 2
+          },
+          {
+            "_token_type": "prompt",
+            "type": "contents",
+            "_type": "contents",
+            "_row_num": 5,
+            "_branch_label_enclosing_screen": "participant/_screen5",
+            "promptIdx": 3
+          }
+        ],
+        "validation_tag_map": {
+          "finalize": []
+        },
+        "operations": [
+          {
+            "_row_num": 2,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 0
+          },
+          {
+            "_row_num": 3,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(1);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 1
+          },
+          {
+            "_row_num": 4,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(2);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 2
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 5,
+            "operationIdx": 3
+          },
+          {
+            "_row_num": 5,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
+            "screen": {
+              "hideInBackHistory": true
+            },
+            "operationIdx": 4
+          },
+          {
+            "_token_type": "resume",
+            "clause": "resume",
+            "_row_num": 5,
+            "operationIdx": 5
+          }
+        ],
+        "branch_label_map": {
+          "_screen2": 0,
+          "_screen3": 1,
+          "_screen4": 2,
+          "_contents": 4,
+          "_screen5": 4
+        }
+      },
+      "initial": {
+        "section_name": "initial",
+        "nested_sections": {
+          "survey": true
+        },
+        "reachable_sections": {
+          "survey": true,
+          "eligibility": true,
+          "household": true,
+          "participant": true
+        },
+        "prompts": [
+          {
+            "_row_num": 3,
+            "type": "opening",
+            "display": {
+              "text": "Edit form"
+            },
+            "_token_type": "prompt",
+            "_type": "opening",
+            "_branch_label_enclosing_screen": "initial/_screen3",
+            "promptIdx": 0
+          },
+          {
+            "_row_num": 4,
+            "clause": "do section survey",
+            "_token_type": "prompt",
+            "_do_section_name": "survey",
+            "_type": "_section",
+            "promptIdx": 1,
+            "display": {
+              "title": "EpiSample Survey Example"
+            },
+            "_branch_label_enclosing_screen": "survey/0"
+          },
+          {
+            "_row_num": 5,
+            "type": "finalize",
+            "display": {
+              "text": "Save form"
+            },
+            "_token_type": "prompt",
+            "_type": "finalize",
+            "_branch_label_enclosing_screen": "initial/_screen5",
+            "promptIdx": 2
+          },
+          {
+            "_row_num": 7,
+            "type": "instances",
+            "display": {
+              "text": "Saved instances"
+            },
+            "_token_type": "prompt",
+            "_type": "instances",
+            "_branch_label_enclosing_screen": "initial/_screen7",
+            "promptIdx": 3
+          },
+          {
+            "_token_type": "prompt",
+            "type": "contents",
+            "_type": "contents",
+            "_row_num": 9,
+            "_branch_label_enclosing_screen": "initial/_screen9",
+            "promptIdx": 4
+          }
+        ],
+        "validation_tag_map": {
+          "finalize": []
+        },
+        "operations": [
+          {
+            "_row_num": 2,
+            "clause": "if // start",
+            "condition": "(opendatakit.getCurrentInstanceId() != null)",
+            "_token_type": "goto_label",
+            "_tag_name": "start",
+            "_branch_label": "_then2",
+            "operationIdx": 0
+          },
+          {
+            "clause": "else // start",
+            "_token_type": "goto_label",
+            "_branch_label": "_else6",
+            "_row_num": 6,
+            "operationIdx": 1
+          },
+          {
+            "_row_num": 3,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(0);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 2
+          },
+          {
+            "_row_num": 4,
+            "clause": "do section survey",
+            "_token_type": "do_section",
+            "_do_section_name": "survey",
+            "operationIdx": 3
+          },
+          {
+            "_row_num": 5,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(2);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 4
+          },
+          {
+            "clause": "end if // start",
+            "_token_type": "goto_label",
+            "_branch_label": "_endif8",
+            "_row_num": 8,
+            "operationIdx": 5
+          },
+          {
+            "_row_num": 7,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(3);\n\nreturn activePromptIndicies;\n}\n",
+            "operationIdx": 6
+          },
+          {
+            "_token_type": "exit_section",
+            "clause": "exit section",
+            "_row_num": 9,
+            "operationIdx": 7
+          },
+          {
+            "_row_num": 9,
+            "_token_type": "begin_screen",
+            "_screen_block": "function() {var activePromptIndicies = [];\nactivePromptIndicies.push(4);\n\nreturn activePromptIndicies;\n}\n",
+            "screen": {
+              "hideInBackHistory": true
+            },
+            "operationIdx": 8
+          },
+          {
+            "_token_type": "resume",
+            "clause": "resume",
+            "_row_num": 9,
+            "operationIdx": 9
+          },
+          {
+            "_token_type": "validate",
+            "clause": "validate finalize",
+            "_sweep_name": "finalize",
+            "_row_num": 9,
+            "screen": {
+              "hideInBackHistory": true
+            },
+            "operationIdx": 10
+          },
+          {
+            "_token_type": "save_and_terminate",
+            "clause": "save and terminate",
+            "calculation": true,
+            "_row_num": 9,
+            "screen": {
+              "hideInBackHistory": true
+            },
+            "operationIdx": 11
+          },
+          {
+            "_token_type": "resume",
+            "clause": "resume",
+            "_row_num": 9,
+            "operationIdx": 12
+          }
+        ],
+        "branch_label_map": {
+          "_then2": 2,
+          "_screen3": 2,
+          "_screen5": 4,
+          "_else6": 6,
+          "_screen7": 6,
+          "_endif8": 7,
+          "_contents": 8,
+          "_screen9": 8,
+          "_finalize": 10
+        }
+      }
+    }
+  }
+}
